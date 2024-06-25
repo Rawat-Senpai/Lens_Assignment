@@ -5,6 +5,7 @@ import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -40,6 +42,7 @@ class AddTaskFragment : Fragment() {
     private var todayDate:Long=0L
 
     private val viewModel by viewModels<TaskViewModel>()
+    private var task:Task ?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,14 +59,47 @@ class AddTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setCurrentDate()
+
         bindObservers()
         bindViews()
-        setupPrioritySpinner()
+
 
         // Initialize the SDK
         if (!Places.isInitialized()) {
             Places.initialize(requireContext(), "AIzaSyAXzDd0QhaE7aF1l75w_zoE3mtjamQCmV0")
+        }
+
+        setInitialState()
+
+        
+
+    }
+
+    private fun setInitialState() {
+        setupPrioritySpinner()
+
+        val jsonTask = arguments?.getString("task")
+        if(jsonTask!= null){
+
+            task= Gson().fromJson(jsonTask,Task::class.java)
+
+            task?.let {
+                binding.apply {
+                    taskTitle.setText(it.title)
+                    taskDescription.setText(it.description)
+                    taskLocation.setText(it.location)
+
+
+                    val formatter = SimpleDateFormat("dd.MM.yyyy")
+                    dueDate.text = formatter.format(it.dueDate)
+                    setPriority(it.priorityLevel!!)
+                }
+            }
+
+
+        }else{
+
+            setCurrentDate()
         }
 
 
@@ -92,7 +128,8 @@ class AddTaskFragment : Fragment() {
                     val title = taskTitle.text.toString()
                     val description = taskDescription.text.toString()
                     val dueDate = dueDate.text.toString()
-                    val newTask = Task(title=title, description = description, dueDate = selectedDateInMillis, priorityLevel = priority , todayDate = todayDate )
+                    val location = taskLocation.text.toString()
+                    val newTask = Task(title=title, description = description, dueDate = selectedDateInMillis, priorityLevel = priority , todayDate = todayDate, location = location )
                     viewModel.insertTask(newTask)
 
                     findNavController().navigate(R.id.action_addTaskFragment_to_homeFragment)
@@ -108,6 +145,12 @@ class AddTaskFragment : Fragment() {
 
             }
 
+    }
+
+    private fun setPriority(priority: String) {
+        val adapter = binding.priorityLevel.adapter as ArrayAdapter<String>
+        val position = adapter.getPosition(priority.capitalize())
+        binding.priorityLevel.setSelection(position)
     }
 
 
@@ -128,6 +171,7 @@ class AddTaskFragment : Fragment() {
                     val place = Autocomplete.getPlaceFromIntent(data)
                     binding.taskLocation.setText(place.name)
                     // Handle the selected place
+                    place.latLng?.let { it1 -> Log.d("latLong", it1.toString()) }
                 }
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 data?.let {
@@ -163,12 +207,8 @@ class AddTaskFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    // Retrieve the selected item from the spinner
                     val selectedPriority = parent?.getItemAtPosition(position).toString()
-                    // Store the selected priority in a string variable
-                    // You can save it to a class-level variable or any other appropriate location
-                    // For example, you can save it to a ViewModel, a global variable, etc.
-                    // Replace `selectedPriorityString` with your desired variable name
+
                     priority = selectedPriority
                 }
 

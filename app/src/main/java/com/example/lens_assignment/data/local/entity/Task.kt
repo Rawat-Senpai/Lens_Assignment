@@ -10,6 +10,8 @@ data class Task (
     val description:String?= null,
     val dueDate:Long?=null,
     val priorityLevel:String?=null,
-    val todayDate:Long
+    val todayDate:Long,
+    val completed:Boolean=false,
+    val location:String?= null
 ){
 }
