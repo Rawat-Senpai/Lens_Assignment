@@ -9,11 +9,7 @@
         android:id="@+id/dashboardFragment"
         android:name="com.example.lens_assignment.ui.dashboardPackage.DashboardFragment"
         android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
-        <action
-            android:id="@+id/action_dashboardFragment_to_addTaskFragment"
-            app:destination="@id/addTaskFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_dashboard" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.lens_assignment.ui.homeFragment.HomeFragment"
@@ -22,7 +18,7 @@
         <action
             android:id="@+id/action_homeFragment_to_addTaskFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@id/homeFragment"
+          
             app:destination="@id/addTaskFragment" />
     </fragment>
     <fragment
@@ -34,5 +30,10 @@
         android:id="@+id/addTaskFragment"
         android:name="com.example.lens_assignment.ui.homeFragment.AddTaskFragment"
         android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" />
+        tools:layout="@layout/fragment_add_task" >
+        <action
+            android:id="@+id/action_addTaskFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

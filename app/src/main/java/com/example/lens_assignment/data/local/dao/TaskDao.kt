@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
 
-    @Query("Select * from task ORDER BY date Desc")
+    @Query("Select * from task ORDER BY todayDate Desc")
     fun getAllTask() : Flow<List<Task>>
 
     @Query("Select * from task WHERE title LIKE :searchQuery OR description LIKE :searchQuery ")

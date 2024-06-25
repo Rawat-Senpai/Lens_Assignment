@@ -80,6 +80,11 @@ dependencies {
     implementation ("com.dolatkia:animated-theme-manager:1.1.4")
 
 
+    // google place api
+    implementation ("com.google.android.libraries.places:places:2.5.0")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+
 }
 
 kapt {
