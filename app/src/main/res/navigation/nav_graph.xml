@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_setting" />
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.example.lens_assignment.AddTaskFragment"
+        android:name="com.example.lens_assignment.ui.homeFragment.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task" />
 </navigation>
