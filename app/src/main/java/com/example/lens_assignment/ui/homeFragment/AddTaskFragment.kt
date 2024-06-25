@@ -61,9 +61,6 @@ class AddTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bindObservers()
-        bindViews()
-
-
         // Initialize the SDK
         if (!Places.isInitialized()) {
             Places.initialize(requireContext(), "AIzaSyAXzDd0QhaE7aF1l75w_zoE3mtjamQCmV0")
@@ -96,10 +93,71 @@ class AddTaskFragment : Fragment() {
                 }
             }
 
+            binding.apply {
+
+                dueDate.setOnClickListener(){
+                    showDatePickerDialog()
+                }
+
+
+                submitButton.setOnClickListener(){
+
+                    val title = taskTitle.text.toString()
+                    val description = taskDescription.text.toString()
+                    val dueDate = dueDate.text.toString()
+                    val location = taskLocation.text.toString()
+                    val newTask = task!!.copy(title=title, description = description, dueDate = selectedDateInMillis, priorityLevel = priority , location = location )
+                    viewModel.updateTask(newTask)
+
+                    findNavController().navigate(R.id.action_addTaskFragment_to_homeFragment)
+
+                }
+
+                placesClient = Places.createClient(requireContext())
+
+                taskLocation.setOnClickListener(){
+                    openAutocompleteActivity()
+                }
+
+
+            }
+
+
+
+
 
         }else{
-
             setCurrentDate()
+
+            binding.apply {
+
+                dueDate.setOnClickListener(){
+                    showDatePickerDialog()
+                }
+
+
+                submitButton.setOnClickListener(){
+
+                    val title = taskTitle.text.toString()
+                    val description = taskDescription.text.toString()
+                    val dueDate = dueDate.text.toString()
+                    val location = taskLocation.text.toString()
+                    val newTask = Task(title=title, description = description, dueDate = selectedDateInMillis, priorityLevel = priority , todayDate = todayDate, location = location )
+                    viewModel.insertTask(newTask)
+
+                    findNavController().navigate(R.id.action_addTaskFragment_to_homeFragment)
+
+                }
+
+                placesClient = Places.createClient(requireContext())
+
+                taskLocation.setOnClickListener(){
+                    openAutocompleteActivity()
+                }
+
+
+            }
+
         }
 
 
@@ -115,7 +173,8 @@ class AddTaskFragment : Fragment() {
     }
 
 
-    private fun bindViews() {
+    /*
+      private fun bindViews() {
             binding.apply {
 
                 dueDate.setOnClickListener(){
@@ -146,6 +205,8 @@ class AddTaskFragment : Fragment() {
             }
 
     }
+     */
+
 
     private fun setPriority(priority: String) {
         val adapter = binding.priorityLevel.adapter as ArrayAdapter<String>
@@ -172,6 +233,8 @@ class AddTaskFragment : Fragment() {
                     binding.taskLocation.setText(place.name)
                     // Handle the selected place
                     place.latLng?.let { it1 -> Log.d("latLong", it1.toString()) }
+                    Log.d("checkingLatLong",place.latLng?.latitude.toString() +"  "+ place.latLng?.longitude)
+
                 }
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 data?.let {

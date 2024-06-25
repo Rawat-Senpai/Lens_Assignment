@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.PrimitiveIterator
 
 
-class TaskListAdapter(val context:Context , private val onTaskCompleted:(Task)->Unit) :
+class TaskListAdapter(val context:Context , private val onTaskCompleted:(Task)->Unit, private val onLongHold:(Task)->Unit) :
     ListAdapter<Task, TaskListAdapter.NoteViewHolder>(ComparatorDiffUtil()) {
 
     inner class NoteViewHolder(private val binding: LayoutTasksBinding) :
@@ -44,12 +44,21 @@ class TaskListAdapter(val context:Context , private val onTaskCompleted:(Task)->
                         onTaskCompleted(task)
                 }
 
+                priorityLevel.text= task.priorityLevel
+                taskLocation.text=task.location
+
+
                 when(task.priorityLevel){
                         Constants.LOW -> cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.priority_low))
                         Constants.MEDIUM -> cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.priority_medium))
                         Constants.HIGH -> cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.priority_high))
                         else -> cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.white))
 
+                }
+
+                root.setOnLongClickListener(){
+                    onLongHold(task)
+                    return@setOnLongClickListener false
                 }
 
 

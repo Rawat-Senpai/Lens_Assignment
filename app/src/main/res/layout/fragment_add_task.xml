@@ -87,7 +87,7 @@
             android:text="Task Location"
             style="@style/LabelStyle" />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/taskLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

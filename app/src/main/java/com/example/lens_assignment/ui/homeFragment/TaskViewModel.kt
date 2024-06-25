@@ -41,7 +41,7 @@ class TaskViewModel  @Inject constructor(private val taskDao: TaskDao): ViewMode
 
 
     sealed class TaskEvents{
-        data class ShowUndoSnackBar(val msg:String,val note:Task):TaskEvents()
+        data class ShowUndoSnackBar(val msg:String,val task:Task):TaskEvents()
 
         object NavigateToTaskFragments:TaskEvents()
     }
