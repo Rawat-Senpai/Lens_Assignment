@@ -1,4 +1,8 @@
 package com.example.lens_assignment.utils
 
-class Constants {
+object Constants {
+    const val TAG="TASK_ASSIGNMENT"
+    const val LOW="Low"
+    const val MEDIUM="Medium"
+    const val HIGH="High"
 }

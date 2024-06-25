@@ -5,13 +5,12 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lens_assignment.R
 import com.example.lens_assignment.adapters.TaskListAdapter
-import com.google.android.material.snackbar.Snackbar
+
 class SwipeToDeleteCallback(
     private val adapter: TaskListAdapter,
     private val context: Context,
@@ -62,21 +61,30 @@ class SwipeToDeleteCallback(
     ) {
         val itemView = viewHolder.itemView
         val background = ColorDrawable()
-        val icon = ContextCompat.getDrawable(context, R.drawable.ic_delete_red) // Use your own icon
+        val icon = ContextCompat.getDrawable(context, R.drawable.edit) // Use your own icon
 
-        background.color = Color.RED
-        background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
-        background.draw(c)
+        if (dX != 0f) {
+            // Draw the red delete background
+            background.color = Color.RED
+            background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
+            background.draw(c)
 
-        val iconMargin = (itemView.height - icon!!.intrinsicHeight) / 2
-        icon.setBounds(
-            itemView.right - iconMargin - icon.intrinsicWidth,
-            itemView.top + iconMargin,
-            itemView.right - iconMargin,
-            itemView.bottom - iconMargin
-        )
-        icon.draw(c)
+            // Draw the delete icon
+            val iconMargin = (itemView.height - icon!!.intrinsicHeight) / 2
+            icon.setBounds(
+                itemView.right - iconMargin - icon.intrinsicWidth,
+                itemView.top + iconMargin,
+                itemView.right - iconMargin,
+                itemView.bottom - iconMargin
+            )
+            icon.draw(c)
+        } else {
+            // Clear the background when the swipe is cancelled or completed
+            background.setBounds(0, 0, 0, 0)
+            background.draw(c)
+        }
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 }
+

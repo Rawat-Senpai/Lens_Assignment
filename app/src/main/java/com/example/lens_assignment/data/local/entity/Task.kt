@@ -13,5 +13,4 @@ data class Task (
     val todayDate:Long,
     val completed:Boolean=false,
     val location:String?= null
-){
-}
+)

@@ -49,7 +49,7 @@ class AddTaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_add_task, container, false)
+        // return inflater.inflate(R.layout.fragment_add_task, container, false)
 
         _binding = FragmentAddTaskBinding.inflate(layoutInflater,container,false)
         return binding.root
@@ -71,7 +71,7 @@ class AddTaskFragment : Fragment() {
 
         setInitialState()
 
-        
+
 
     }
 

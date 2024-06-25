@@ -6,17 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lens_assignment.R
 import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.LayoutTasksBinding
+import com.example.lens_assignment.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.PrimitiveIterator
 
 
-class TaskListAdapter(val context:Context) :
+class TaskListAdapter(val context:Context , private val onTaskCompleted:(Task)->Unit) :
     ListAdapter<Task, TaskListAdapter.NoteViewHolder>(ComparatorDiffUtil()) {
 
     inner class NoteViewHolder(private val binding: LayoutTasksBinding) :
@@ -32,13 +34,24 @@ class TaskListAdapter(val context:Context) :
                 val formatter = SimpleDateFormat("dd.MM.yyyy")
                 dueDate.text = formatter.format(task.dueDate)
 
-                root.setOnLongClickListener{
+                if (task.completed){
+                    completedCheckbox.isChecked=true
+                }else{
+                    completedCheckbox.isChecked=false
+                }
 
+                completedCheckbox.setOnClickListener(){
+                        onTaskCompleted(task)
+                }
 
-
-                    return@setOnLongClickListener false
+                when(task.priorityLevel){
+                        Constants.LOW -> cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.priority_low))
+                        Constants.MEDIUM -> cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.priority_medium))
+                        Constants.HIGH -> cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.priority_high))
+                        else -> cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.white))
 
                 }
+
 
 
             }

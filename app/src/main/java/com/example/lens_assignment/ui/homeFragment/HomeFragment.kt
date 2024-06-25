@@ -29,7 +29,7 @@ class HomeFragment : Fragment(), TaskActionListener {
     private var _binding:FragmentHomeBinding?=null
     private val binding get() = _binding!!
     private val viewModel by viewModels<TaskViewModel>()
-    private val taskAdapter:TaskListAdapter by lazy { TaskListAdapter (requireContext()) }
+    lateinit var  taskAdapter:TaskListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +37,7 @@ class HomeFragment : Fragment(), TaskActionListener {
     ): View? {
 
         _binding= FragmentHomeBinding.inflate(layoutInflater,container,false)
+        taskAdapter = TaskListAdapter(requireContext(), ::onTaskCompleted)
         return binding.root
     }
 
@@ -83,6 +84,17 @@ class HomeFragment : Fragment(), TaskActionListener {
                 }
             }
         }
+
+
+    }
+
+
+    private fun onTaskCompleted(task:Task){
+        Log.d("taskChecking",task.toString())
+
+        val updateTask = task.copy(title = task.title, description = task.description, todayDate = task.todayDate, dueDate = task.dueDate, completed = !task.completed)
+        viewModel.updateTask(updateTask)
+
 
     }
 

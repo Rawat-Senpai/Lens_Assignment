@@ -9,4 +9,11 @@
     <color name="low_priority">#32CD32</color> <!-- Lime Green -->
     <color name="dark_gray">#808080</color> <!-- Dark Gray -->
 
+    <color name="transparent">#00FFFFFF</color>
+    <color name="grey">#494747</color>
+
+    <color name="priority_low">#A5D6A7</color>
+    <color name="priority_medium">#FFF59D</color>
+    <color name="priority_high">#EF9A9A</color>
+
 </resources>

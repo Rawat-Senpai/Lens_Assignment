@@ -1,58 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp"
     android:orientation="vertical">
 
-    <!-- Task Title -->
-    <TextView
-        android:id="@+id/taskTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Task Title"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <!-- Due Date -->
-    <TextView
-        android:id="@+id/dueDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Due Date: June 30, 2024"
-        android:textSize="14sp"
-        android:textColor="@color/dark_gray"
-        android:layout_marginBottom="4dp"/>
+        <!-- Task Title -->
+        <TextView
+            android:id="@+id/taskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Task Title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Task Description -->
+        <TextView
+            android:id="@+id/taskDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Task Description"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Due Date -->
+        <TextView
+            android:id="@+id/dueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Due Date"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Priority Level -->
+        <TextView
+            android:id="@+id/priorityLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Priority Level"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
 
 
-    <!-- task description -->
-    <TextView
-        android:id="@+id/taskDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="descrption"
-        android:textSize="14sp"
+        <!-- Task Location -->
+        <TextView
+            android:id="@+id/taskLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Task Location"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
 
-        android:layout_marginBottom="4dp"/>
-    <!-- Priority Level -->
-    <TextView
-        android:id="@+id/textPriorityLevel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Priority: High"
-        android:textSize="14sp"
-        android:textColor="@color/high_priority"
-        android:layout_marginBottom="4dp"/>
+        <!-- Completed Checkbox -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
 
-    <!-- Checkbox for Task Completion -->
-    <CheckBox
-        android:id="@+id/checkboxCompleted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Completed"
-        android:textSize="14sp"
-        android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
 
-</LinearLayout>
+            <CheckBox
+                android:id="@+id/completedCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
