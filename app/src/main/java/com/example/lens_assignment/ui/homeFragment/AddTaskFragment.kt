@@ -18,6 +18,12 @@ import com.example.lens_assignment.R
 import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.FragmentAddTaskBinding
 import com.example.lens_assignment.viewModelPackage.TaskViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -32,18 +38,24 @@ import java.util.Locale
 
 
 @AndroidEntryPoint
-class AddTaskFragment : Fragment() {
+class AddTaskFragment : Fragment(), OnMapReadyCallback {
 
-    private var _binding:FragmentAddTaskBinding?= null
+    private var _binding: FragmentAddTaskBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var placesClient: PlacesClient
-    private var priority="'"
-    private var selectedDateInMillis:Long=0L
-    private var todayDate:Long=0L
+    private var priority = "'"
+    private var selectedDateInMillis: Long = 0L
+    private var todayDate: Long = 0L
 
     private val viewModel by viewModels<TaskViewModel>()
-    private var task:Task ?= null
+    private var task: Task? = null
+
+    private var mapView: MapView? = null
+    private var googleMap: GoogleMap? = null
+    private var latLng: LatLng? = null
+    private var latitude:Double = 0.0
+    private var longitude:Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +64,8 @@ class AddTaskFragment : Fragment() {
         // Inflate the layout for this fragment
         // return inflater.inflate(R.layout.fragment_add_task, container, false)
 
-        _binding = FragmentAddTaskBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentAddTaskBinding.inflate(layoutInflater, container, false)
+
         return binding.root
 
 
@@ -62,6 +75,9 @@ class AddTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bindObservers()
+        mapView = binding.mapView
+        mapView?.onCreate(savedInstanceState)
+        mapView?.getMapAsync(this)
         // Initialize the SDK
         if (!Places.isInitialized()) {
             Places.initialize(requireContext(), "AIzaSyAXzDd0QhaE7aF1l75w_zoE3mtjamQCmV0")
@@ -70,23 +86,23 @@ class AddTaskFragment : Fragment() {
         setInitialState()
 
 
-
     }
 
     private fun setInitialState() {
         setupPrioritySpinner()
 
         val jsonTask = arguments?.getString("task")
-        if(jsonTask!= null){
+        if (jsonTask != null) {
 
-            task= Gson().fromJson(jsonTask,Task::class.java)
+            task = Gson().fromJson(jsonTask, Task::class.java)
 
             task?.let {
                 binding.apply {
                     taskTitle.setText(it.title)
                     taskDescription.setText(it.description)
                     taskLocation.setText(it.location)
-
+                    latitude = it.latitude
+                    longitude = it.longitude
 
                     val formatter = SimpleDateFormat("dd.MM.yyyy")
                     dueDate.text = formatter.format(it.dueDate)
@@ -96,18 +112,27 @@ class AddTaskFragment : Fragment() {
 
             binding.apply {
 
-                dueDate.setOnClickListener(){
+                dueDate.setOnClickListener() {
                     showDatePickerDialog()
                 }
 
 
-                submitButton.setOnClickListener(){
+                submitButton.setOnClickListener() {
 
                     val title = taskTitle.text.toString()
                     val description = taskDescription.text.toString()
                     val dueDate = dueDate.text.toString()
                     val location = taskLocation.text.toString()
-                    val newTask = task!!.copy(title=title, description = description, dueDate = selectedDateInMillis, priorityLevel = priority , location = location )
+                    val newTask = task!!.copy(
+                        title = title,
+                        description = description,
+                        dueDate = selectedDateInMillis,
+                        priorityLevel = priority,
+                        location = location,
+                        longitude = longitude,
+                        latitude = longitude,
+                        completed = false
+                    )
                     viewModel.updateTask(newTask)
 
                     findNavController().navigate(R.id.action_addTaskFragment_to_homeFragment)
@@ -116,35 +141,45 @@ class AddTaskFragment : Fragment() {
 
                 placesClient = Places.createClient(requireContext())
 
-                taskLocation.setOnClickListener(){
+                taskLocation.setOnClickListener() {
                     openAutocompleteActivity()
                 }
 
             }
 
-        }else{
+        } else {
             setCurrentDate()
 
             binding.apply {
 
-                dueDate.setOnClickListener(){
+                dueDate.setOnClickListener() {
                     showDatePickerDialog()
                 }
 
 
-                submitButton.setOnClickListener(){
+                submitButton.setOnClickListener() {
 
                     val title = taskTitle.text.toString()
                     val description = taskDescription.text.toString()
                     val dueDate = dueDate.text.toString()
                     val location = taskLocation.text.toString()
-                    val newTask = Task(title=title, description = description, dueDate = selectedDateInMillis, priorityLevel = priority , todayDate = todayDate, location = location )
+                    val newTask = Task(
+                        title = title,
+                        description = description,
+                        dueDate = selectedDateInMillis,
+                        priorityLevel = priority,
+                        todayDate = todayDate,
+                        location = location,
+                        longitude = longitude,
+                        latitude = longitude,
+                        completed = false
+                    )
                     viewModel.insertTask(newTask)
 
                     findNavController().navigate(R.id.action_addTaskFragment_to_homeFragment)
                 }
                 placesClient = Places.createClient(requireContext())
-                taskLocation.setOnClickListener(){
+                taskLocation.setOnClickListener() {
                     openAutocompleteActivity()
                 }
             }
@@ -158,9 +193,8 @@ class AddTaskFragment : Fragment() {
         val currentDate = dateFormat.format(calendar.time)
         binding.dueDate.setText(currentDate)
         selectedDateInMillis = calendar.timeInMillis
-        todayDate= calendar.timeInMillis
+        todayDate = calendar.timeInMillis
     }
-
 
 
     private fun setPriority(priority: String) {
@@ -171,7 +205,8 @@ class AddTaskFragment : Fragment() {
 
 
     private fun openAutocompleteActivity() {
-        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
+        val fields =
+            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
         val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
             .build(requireContext())
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
@@ -188,8 +223,17 @@ class AddTaskFragment : Fragment() {
                     binding.taskLocation.setText(place.name)
                     // Handle the selected place
                     place.latLng?.let { it1 -> Log.d("latLong", it1.toString()) }
-                    Log.d("checkingLatLong",place.latLng?.latitude.toString() +"  "+ place.latLng?.longitude)
+                    Log.d(
+                        "checkingLatLong",
+                        place.latLng?.latitude.toString() + "  " + place.latLng?.longitude
+                    )
+                    place.latLng?.let { latLng ->
+                        Log.d("checkingLatLong", "${latLng.latitude}, ${latLng.longitude}")
+                        this.latLng = latLng
+                        googleMap?.let { addMarker(latLng) }
+                        latitude = latLng.latitude
 
+                    }
                 }
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 data?.let {
@@ -218,22 +262,23 @@ class AddTaskFragment : Fragment() {
             // Apply the adapter to the spinner
             binding.priorityLevel.adapter = adapter
 
-            binding.priorityLevel.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    val selectedPriority = parent?.getItemAtPosition(position).toString()
+            binding.priorityLevel.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val selectedPriority = parent?.getItemAtPosition(position).toString()
 
-                    priority = selectedPriority
-                }
+                        priority = selectedPriority
+                    }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle case where nothing is selected (optional)
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        // Handle case where nothing is selected (optional)
+                    }
                 }
-            }
 
         }
     }
@@ -247,13 +292,15 @@ class AddTaskFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate = "${selectedDay.toString().padStart(2, '0')}/${(selectedMonth + 1).toString().padStart(2, '0')}/$selectedYear"
+                val selectedDate = "${selectedDay.toString().padStart(2, '0')}/${
+                    (selectedMonth + 1).toString().padStart(2, '0')
+                }/$selectedYear"
 
                 binding.dueDate.setText(selectedDate)
 
                 val selectedCalendar = Calendar.getInstance()
                 selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
-                 selectedDateInMillis = selectedCalendar.timeInMillis
+                selectedDateInMillis = selectedCalendar.timeInMillis
             },
             year,
             month,
@@ -264,21 +311,64 @@ class AddTaskFragment : Fragment() {
     }
 
 
-
-
-
     private fun bindObservers() {
 
 
+    }
 
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView?.onSaveInstanceState(outState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
+    }
+
+    override fun onPause() {
+        mapView?.onPause()
+        super.onPause()
+    }
+
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
+        mapView?.onDestroy()
         _binding = null
     }
 
+    override fun onMapReady(map: GoogleMap?) {
+        googleMap = map
+        googleMap?.uiSettings?.isZoomControlsEnabled = true
+
+        val jsonTask = arguments?.getString("task")
+        if (jsonTask != null) {
+
+            task.let {
+                addMarker(LatLng(longitude,latitude))
+            }
+
+        } else{
+            latLng?.let { addMarker(it) }
+        }
+
+
+    }
+
+    private fun addMarker(latLng: LatLng) {
+        val markerOptions = MarkerOptions().position(latLng).title("Selected Location")
+        googleMap?.addMarker(markerOptions)
+
+        // Move camera to the marker
+        googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+    }
 
 }

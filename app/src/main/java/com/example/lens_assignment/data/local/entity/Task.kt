@@ -12,5 +12,8 @@ data class Task (
     val priorityLevel:String?=null,
     val todayDate:Long,
     val completed:Boolean=false,
-    val location:String?= null
+    val location:String?= null,
+    val latitude:Double=0.0,
+    val longitude:Double=0.0,
+    val sync:Boolean= false,
 )
