@@ -15,6 +15,8 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.dolatkia.animatedThemeManager.AppTheme
+import com.dolatkia.animatedThemeManager.ThemeFragment
 import com.example.lens_assignment.R
 import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.FragmentAddTaskBinding
@@ -39,7 +41,7 @@ import java.util.Locale
 
 
 @AndroidEntryPoint
-class AddTaskFragment : Fragment(), OnMapReadyCallback {
+class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
 
     private var _binding: FragmentAddTaskBinding? = null
     private val binding get() = _binding!!
@@ -86,6 +88,10 @@ class AddTaskFragment : Fragment(), OnMapReadyCallback {
 
         setInitialState()
 
+
+    }
+
+    override fun syncTheme(appTheme: AppTheme) {
 
     }
 

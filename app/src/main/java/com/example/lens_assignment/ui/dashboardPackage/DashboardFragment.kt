@@ -13,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dolatkia.animatedThemeManager.AppTheme
+import com.dolatkia.animatedThemeManager.ThemeFragment
 import com.example.lens_assignment.R
 import com.example.lens_assignment.adapters.TaskListAdapter
 import com.example.lens_assignment.data.local.entity.Task
@@ -28,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DashboardFragment : Fragment() {
+class DashboardFragment : ThemeFragment() {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
@@ -56,6 +58,10 @@ class DashboardFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
         bindObserver()
+
+    }
+
+    override fun syncTheme(appTheme: AppTheme) {
 
     }
 

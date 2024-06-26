@@ -21,6 +21,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dolatkia.animatedThemeManager.AppTheme
+import com.dolatkia.animatedThemeManager.ThemeFragment
 import com.example.lens_assignment.R
 import com.example.lens_assignment.adapters.TaskListAdapter
 import com.example.lens_assignment.data.local.entity.Task
@@ -36,7 +38,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 
-class HomeFragment : Fragment(), TaskActionListener {
+class HomeFragment : ThemeFragment(), TaskActionListener {
 
     private var _binding:FragmentHomeBinding?=null
     private val binding get() = _binding!!
@@ -58,6 +60,10 @@ class HomeFragment : Fragment(), TaskActionListener {
 
         bindObservers()
         bindViews()
+
+    }
+
+    override fun syncTheme(appTheme: AppTheme) {
 
     }
 

@@ -59,7 +59,7 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@id/personImageSquare" />
         <Constraint
-            android:id="@+id/postRecyclerView"
+            android:id="@+id/dataLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             motion:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +71,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:visibility="visible"
-            android:id="@+id/editProfile"
+            android:id="@+id/themeChange"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintBottom_toTopOf="@+id/linearLayout4"

@@ -8,17 +8,35 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.dolatkia.animatedThemeManager.AppTheme
+import com.dolatkia.animatedThemeManager.ThemeActivity
 import com.example.lens_assignment.databinding.ActivityMainBinding
+import com.example.lens_assignment.utils.AppInfo
+import com.example.lens_assignment.utils.DarkTheme
+import com.example.lens_assignment.utils.LightTheme
+import com.example.lens_assignment.utils.MyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity :  ThemeActivity() {
 
 
      private var _binding:ActivityMainBinding ?= null
     private val binding get() = _binding!!
 
     private lateinit var navController : NavController
+
+    @Inject
+    lateinit var appInfo:AppInfo
+
+    override fun getStartTheme(): AppTheme {
+        return if(appInfo.getDarkMode()){
+            DarkTheme()
+        }else{
+            LightTheme()
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +61,10 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(binding.bottomNavigation,navController)
 
 
+    }
+
+    override fun syncTheme(appTheme: AppTheme) {
+        val myAppTheme = appTheme as MyAppTheme
     }
 
 
