@@ -3,32 +3,40 @@ package com.example.lens_assignment.ui.dashboardPackage
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.lens_assignment.R
+import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.FragmentDashboardBinding
 import com.example.lens_assignment.databinding.FragmentEditTaskDetailsBinding
+import com.example.lens_assignment.ui.homeFragment.TaskViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.MPPointF
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class DashboardFragment : Fragment() {
 
     private var _binding:FragmentDashboardBinding?= null
     private val binding get()= _binding!!
-
+    private val viewModel by viewModels<TaskViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+
 
         _binding= FragmentDashboardBinding.inflate(layoutInflater,container,false)
         return binding.root
@@ -39,97 +47,80 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bindViews()
+//        bindViews()
+        bindObserver()
 
     }
 
-    private fun bindViews(){
+    private fun bindObserver() {
 
-        binding.apply {
+        // observing all task priority count  from the view model about the
 
-            pieChart.setUsePercentValues(true)
-            pieChart.getDescription().setEnabled(false)
-            pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
+        viewModel.highPriorityCount.observe(viewLifecycleOwner) { updatePieChart() }
+        viewModel.mediumPriorityCount.observe(viewLifecycleOwner) { updatePieChart() }
+        viewModel.lowPriorityCount.observe(viewLifecycleOwner) { updatePieChart() }
 
-            // on below line we are setting drag for our pie chart
-            pieChart.setDragDecelerationFrictionCoef(0.95f)
+        // observing all completed and pending task  count  from the view model about the
 
-            // on below line we are setting hole
-            // and hole color for pie chart
-            pieChart.setDrawHoleEnabled(true)
-            pieChart.setHoleColor(Color.WHITE)
+        viewModel.completedTaskCount.observe(viewLifecycleOwner) { updateProgressBar() }
+        viewModel.inCompletedTaskCount.observe(viewLifecycleOwner) { updateProgressBar() }
 
-            // on below line we are setting circle color and alpha
-            pieChart.setTransparentCircleColor(Color.WHITE)
-            pieChart.setTransparentCircleAlpha(110)
 
-            // on  below line we are setting hole radius
-            pieChart.setHoleRadius(58f)
-            pieChart.setTransparentCircleRadius(61f)
 
-            // on below line we are setting center text
-            pieChart.setDrawCenterText(true)
+    }
+    private fun updateProgressBar() {
+        val completedTasks = viewModel.completedTaskCount.value ?: 0
+        val incompleteTasks = viewModel.inCompletedTaskCount.value ?: 0
+        val totalTasks = completedTasks + incompleteTasks
 
-            // on below line we are setting
-            // rotation for our pie chart
-            pieChart.setRotationAngle(0f)
+        Log.d("chekcingTotalTask","${totalTasks.toString()}  ${completedTasks.toString()}   ${incompleteTasks.toString()}" )
 
-            // enable rotation of the pieChart by touch
-            pieChart.setRotationEnabled(true)
-            pieChart.setHighlightPerTapEnabled(true)
-
-            // on below line we are setting animation for our pie chart
-            pieChart.animateY(1400, Easing.EaseInOutQuad)
-
-            // on below line we are disabling our legend for pie chart
-            pieChart.legend.isEnabled = false
-            pieChart.setEntryLabelColor(Color.WHITE)
-            pieChart.setEntryLabelTextSize(12f)
-
-            // on below line we are creating array list and
-            // adding data to it to display in pie chart
-            val entries: ArrayList<PieEntry> = ArrayList()
-            entries.add(PieEntry(70f))
-            entries.add(PieEntry(20f))
-            entries.add(PieEntry(10f))
-
-            // on below line we are setting pie data set
-            val dataSet = PieDataSet(entries, "Mobile OS")
-
-            // on below line we are setting icons.
-            dataSet.setDrawIcons(false)
-
-            // on below line we are setting slice for pie
-            dataSet.sliceSpace = 3f
-            dataSet.iconsOffset = MPPointF(0f, 40f)
-            dataSet.selectionShift = 5f
-
-            // add a lot of colors to list
-            val colors: ArrayList<Int> = ArrayList()
-            colors.add(resources.getColor(R.color.grey))
-            colors.add(resources.getColor(R.color.black))
-            colors.add(resources.getColor(R.color.low_priority))
-
-            // on below line we are setting colors.
-            dataSet.colors = colors
-
-            // on below line we are setting pie data set
-            val data = PieData(dataSet)
-            data.setValueFormatter(PercentFormatter())
-            data.setValueTextSize(15f)
-            data.setValueTypeface(Typeface.DEFAULT_BOLD)
-            data.setValueTextColor(Color.WHITE)
-            pieChart.setData(data)
-
-            // undo all highlights
-            pieChart.highlightValues(null)
-
-            // loading chart
-            pieChart.invalidate()
-
+        if (totalTasks > 0) {
+            val progress = (completedTasks.toFloat() / totalTasks) * 100
+            binding.progressView.progress= progress
+            binding.progressView.labelText = "Completed: $completedTasks / $totalTasks"
+//            binding.progressView.labelText = "${progress.toInt()}%"
+        } else {
+            binding.progressView.progress=(0f)
+            binding.progressView.labelText = "No tasks"
+//            binding.progressView.progressText = "0%"
         }
+    }
 
+    private fun updatePieChart() {
+        val highPriority = viewModel.highPriorityCount.value ?: 0
+        val mediumPriority = viewModel.mediumPriorityCount.value ?: 0
+        val lowPriority = viewModel.lowPriorityCount.value ?: 0
 
+        val entries = ArrayList<PieEntry>()
+        if (highPriority > 0) entries.add(PieEntry(highPriority.toFloat(), "High"))
+        if (mediumPriority > 0) entries.add(PieEntry(mediumPriority.toFloat(), "Medium"))
+        if (lowPriority > 0) entries.add(PieEntry(lowPriority.toFloat(), "Low"))
+
+        val dataSet = PieDataSet(entries, "Task Priority")
+        dataSet.setDrawIcons(false)
+        dataSet.sliceSpace = 3f
+        dataSet.iconsOffset = MPPointF(0f, 40f)
+        dataSet.selectionShift = 5f
+
+        val colors = arrayListOf(
+            ContextCompat.getColor(requireContext(), R.color.high_priority),
+            ContextCompat.getColor(requireContext(), R.color.medium_priority),
+            ContextCompat.getColor(requireContext(), R.color.low_priority)
+        )
+        dataSet.colors = colors
+
+        val data = PieData(dataSet)
+        data.setValueFormatter(PercentFormatter())
+        data.setValueTextSize(15f)
+        data.setValueTypeface(Typeface.DEFAULT_BOLD)
+        data.setValueTextColor(Color.WHITE)
+        binding.pieChart.data = data
+
+        binding.pieChart.description.text=""
+        binding.pieChart.description.isEnabled=false
+        binding.pieChart.highlightValues(null)
+        binding.pieChart.invalidate()
     }
 
 
