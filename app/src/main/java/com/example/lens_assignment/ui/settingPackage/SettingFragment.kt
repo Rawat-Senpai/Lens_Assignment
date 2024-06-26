@@ -30,8 +30,6 @@ class SettingFragment : ThemeFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        // return inflater.inflate(R.layout.fragment_setting, container, false)
         _binding= FragmentSettingBinding.inflate(layoutInflater,container,false)
         return binding.root
     }
@@ -60,31 +58,31 @@ class SettingFragment : ThemeFragment() {
 
     private fun bindObservers() {
 
-
-
     }
 
     private fun setUpInitialState() {
         binding.apply {
 
-            if(appInfo.getDarkMode()){
-                themeChange.setMinAndMaxProgress(0.5f, 1f);
-                themeChange.speed=.5f
-                themeChange.playAnimation()
-                appInfo.setDarkMode(true)
-                ThemeManager.instance.changeTheme(DarkTheme(),requireView(),2300)
+            themeChange.setOnClickListener(){
+
+                if(appInfo.getDarkMode()){
+                    themeChange.setMinAndMaxProgress(0.5f, 1f);
+                    themeChange.speed=.5f
+                    themeChange.playAnimation()
+                    appInfo.setDarkMode(true)
+                    ThemeManager.instance.changeTheme(DarkTheme(),it,2300)
 
 
-            }else{
-                themeChange.setMinAndMaxProgress(0.0f, .5f);
-                themeChange.speed=.5f
-                themeChange.playAnimation()
-                appInfo.setDarkMode(false)
+                }else{
+                    themeChange.setMinAndMaxProgress(0.0f, .5f);
+                    themeChange.speed=.5f
+                    themeChange.playAnimation()
+                    appInfo.setDarkMode(false)
+                }
+
+                ThemeManager.instance.reverseChangeTheme(LightTheme(),it,2300)
+
             }
-
-            ThemeManager.instance.reverseChangeTheme(LightTheme(),requireView(),2300)
-
-
 
         }
     }
