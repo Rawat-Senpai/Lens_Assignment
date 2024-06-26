@@ -25,12 +25,38 @@
     <color name="darkHintColor">#999F9393</color>
 
 
+    <color name="light_primaryColor">#6200EE</color>
+    <color name="light_primaryColorVariant">#3700B3</color>
+    <color name="light_secondaryColor">#03DAC6</color>
+    <color name="light_backgroundColor">#FFFFFF</color>
+    <color name="light_surfaceColor">#FFFFFF</color>
+    <color name="light_errorColor">#B00020</color>
+    <color name="light_onPrimaryColor">#FFFFFF</color>
+    <color name="light_onSecondaryColor">#000000</color>
+    <color name="light_onBackgroundColor">#000000</color>
+    <color name="light_onSurfaceColor">#000000</color>
+    <color name="light_onErrorColor">#FFFFFF</color>
+
+
     <!-- light theme -->
     <color name="lightBackground">#FBF0DA</color>
     <color name="lightWhiteIcons">#FF000000</color>
     <color name="lightMainTextColor">#FF000000</color>
     <color name="lightSubHeadingColor">#494747</color>
     <color name="lightHintColor">#6C6C6C</color>
+
+
+    <color name="dark_primaryColor">#BB86FC</color>
+    <color name="dark_primaryColorVariant">#3700B3</color>
+    <color name="dark_secondaryColor">#03DAC6</color>
+    <color name="dark_backgroundColor">#121212</color>
+    <color name="dark_surfaceColor">#121212</color>
+    <color name="dark_errorColor">#CF6679</color>
+    <color name="dark_onPrimaryColor">#000000</color>
+    <color name="dark_onSecondaryColor">#000000</color>
+    <color name="dark_onBackgroundColor">#FFFFFF</color>
+    <color name="dark_onSurfaceColor">#FFFFFF</color>
+    <color name="dark_onErrorColor">#000000</color>
 
 
 </resources>
