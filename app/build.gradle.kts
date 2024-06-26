@@ -91,6 +91,21 @@ dependencies {
     // progress bar
     implementation ("com.github.skydoves:progressview:1.1.3")
 
+    // motion layout
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
+
+
+
+    // ripple effect
+    implementation ("com.dolatkia:animated-theme-manager:1.1.4")
+
+    // binding
+    implementation ("com.android.support:multidex:1.0.3")
+
+    // lottie animation
+    implementation ("com.airbnb.android:lottie:4.2.2")
+
+
 }
 
 kapt {

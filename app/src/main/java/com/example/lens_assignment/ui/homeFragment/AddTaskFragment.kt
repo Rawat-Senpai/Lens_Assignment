@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.lens_assignment.R
@@ -98,6 +99,7 @@ class AddTaskFragment : Fragment(), OnMapReadyCallback {
 
             task?.let {
                 binding.apply {
+                    layoutCompleted.isVisible=true
                     taskTitle.setText(it.title)
                     taskDescription.setText(it.description)
                     taskLocation.setText(it.location)
@@ -118,10 +120,9 @@ class AddTaskFragment : Fragment(), OnMapReadyCallback {
 
 
                 submitButton.setOnClickListener() {
-
+                Log.d("checkingCheckedVal",completedCheckbox.isChecked.toString())
                     val title = taskTitle.text.toString()
                     val description = taskDescription.text.toString()
-                    val dueDate = dueDate.text.toString()
                     val location = taskLocation.text.toString()
                     val newTask = task!!.copy(
                         title = title,
@@ -130,8 +131,8 @@ class AddTaskFragment : Fragment(), OnMapReadyCallback {
                         priorityLevel = priority,
                         location = location,
                         longitude = longitude,
-                        latitude = longitude,
-                        completed = false
+                        latitude = latitude,
+                        completed = completedCheckbox.isChecked
                     )
                     viewModel.updateTask(newTask)
 
@@ -151,7 +152,7 @@ class AddTaskFragment : Fragment(), OnMapReadyCallback {
             setCurrentDate()
 
             binding.apply {
-
+                layoutCompleted.isVisible=false
                 dueDate.setOnClickListener() {
                     showDatePickerDialog()
                 }
@@ -171,7 +172,7 @@ class AddTaskFragment : Fragment(), OnMapReadyCallback {
                         todayDate = todayDate,
                         location = location,
                         longitude = longitude,
-                        latitude = longitude,
+                        latitude = latitude,
                         completed = false
                     )
                     viewModel.insertTask(newTask)
@@ -232,6 +233,8 @@ class AddTaskFragment : Fragment(), OnMapReadyCallback {
                         this.latLng = latLng
                         googleMap?.let { addMarker(latLng) }
                         latitude = latLng.latitude
+                        longitude= latLng.longitude
+
 
                     }
                 }
@@ -353,7 +356,7 @@ class AddTaskFragment : Fragment(), OnMapReadyCallback {
         if (jsonTask != null) {
 
             task.let {
-                addMarker(LatLng(longitude,latitude))
+                addMarker(LatLng(latitude,longitude))
             }
 
         } else{

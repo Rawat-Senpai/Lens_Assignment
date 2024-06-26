@@ -106,6 +106,32 @@
             android:layout_alignParentEnd="true"
             android:apiKey="AIzaSyBnRbxUvJO49xtZNDmLtJ7afkYv9uWhIBs" />
 
+
+        <!-- Completed Checkbox -->
+        <LinearLayout
+            android:id="@+id/layoutCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <CheckBox
+                android:id="@+id/completedCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+
         <!-- Submit Button -->
         <TextView
             android:id="@+id/submitButton"
