@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.lens_assignment.R
 import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.FragmentAddTaskBinding
+import com.example.lens_assignment.viewModelPackage.TaskViewModel
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -119,12 +120,7 @@ class AddTaskFragment : Fragment() {
                     openAutocompleteActivity()
                 }
 
-
             }
-
-
-
-
 
         }else{
             setCurrentDate()
@@ -146,20 +142,13 @@ class AddTaskFragment : Fragment() {
                     viewModel.insertTask(newTask)
 
                     findNavController().navigate(R.id.action_addTaskFragment_to_homeFragment)
-
                 }
-
                 placesClient = Places.createClient(requireContext())
-
                 taskLocation.setOnClickListener(){
                     openAutocompleteActivity()
                 }
-
-
             }
-
         }
-
 
     }
 
@@ -172,40 +161,6 @@ class AddTaskFragment : Fragment() {
         todayDate= calendar.timeInMillis
     }
 
-
-    /*
-      private fun bindViews() {
-            binding.apply {
-
-                dueDate.setOnClickListener(){
-                    showDatePickerDialog()
-                }
-
-
-                submitButton.setOnClickListener(){
-
-                    val title = taskTitle.text.toString()
-                    val description = taskDescription.text.toString()
-                    val dueDate = dueDate.text.toString()
-                    val location = taskLocation.text.toString()
-                    val newTask = Task(title=title, description = description, dueDate = selectedDateInMillis, priorityLevel = priority , todayDate = todayDate, location = location )
-                    viewModel.insertTask(newTask)
-
-                    findNavController().navigate(R.id.action_addTaskFragment_to_homeFragment)
-
-                }
-
-                placesClient = Places.createClient(requireContext())
-
-                taskLocation.setOnClickListener(){
-                    openAutocompleteActivity()
-                }
-
-
-            }
-
-    }
-     */
 
 
     private fun setPriority(priority: String) {

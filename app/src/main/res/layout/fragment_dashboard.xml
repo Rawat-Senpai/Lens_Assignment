@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ui.dashboardPackage.DashboardFragment"
+    android:fillViewport="true">
 
-    tools:context=".ui.dashboardPackage.DashboardFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
 
     <com.github.mikephil.charting.charts.PieChart
@@ -18,33 +23,70 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <TextView
+        android:id="@+id/taskProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tasks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pieChart"
+        android:layout_marginTop="20dp"/>
 
 
     <com.skydoves.progressview.ProgressView
-        android:id="@+id/progressView"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/pieChart"
-        app:progressView_autoAnimate="true"
+        android:id="@+id/progressViewCompleted"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskProgress"
         app:progressView_colorBackground="@color/white"
         app:progressView_labelColorInner="@color/white"
         app:progressView_labelColorOuter="@color/black"
-        app:progressView_labelSize="13sp"
-        app:progressView_labelSpace="10dp"
-        app:progressView_labelText="achieve 65%"
-        app:progressView_labelTypeface="bold"
-        app:progressView_max="100"
-        app:progressView_min="15"
-        app:progressView_padding="1dp"
-        app:progressView_progress="40"
-        app:progressView_progressFromPrevious="true"
+        app:progressView_labelSize="12sp"
         app:progressView_radius="12dp" />
 
 
+    <com.skydoves.progressview.ProgressView
+        android:id="@+id/progressViewPending"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressViewCompleted"
+        app:progressView_colorBackground="@color/white"
+        app:progressView_labelColorInner="@color/white"
+        app:progressView_labelColorOuter="@color/black"
+        app:progressView_labelSize="12sp"
+        app:progressView_radius="12dp" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pending Task"
+        android:textSize="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/progressViewPending" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPendingTasks"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

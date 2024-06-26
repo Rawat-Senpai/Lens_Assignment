@@ -10,35 +10,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lens_assignment.R
+import com.example.lens_assignment.adapters.TaskListAdapter
 import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.FragmentDashboardBinding
-import com.example.lens_assignment.databinding.FragmentEditTaskDetailsBinding
-import com.example.lens_assignment.ui.homeFragment.TaskViewModel
-import com.github.mikephil.charting.animation.Easing
+import com.example.lens_assignment.viewModelPackage.TaskViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.MPPointF
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
 
-    private var _binding:FragmentDashboardBinding?= null
-    private val binding get()= _binding!!
+    private var _binding: FragmentDashboardBinding? = null
+    private val binding get() = _binding!!
     private val viewModel by viewModels<TaskViewModel>()
+    private lateinit var taskAdapter: TaskListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
 
-        _binding= FragmentDashboardBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentDashboardBinding.inflate(layoutInflater, container, false)
         return binding.root
 
     }
@@ -48,6 +50,11 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 //        bindViews()
+        taskAdapter = TaskListAdapter(requireContext(), ::onTaskCompleted, ::onTaskLongHold)
+        binding.rvPendingTasks.apply {
+            adapter = taskAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
         bindObserver()
 
     }
@@ -65,27 +72,65 @@ class DashboardFragment : Fragment() {
         viewModel.completedTaskCount.observe(viewLifecycleOwner) { updateProgressBar() }
         viewModel.inCompletedTaskCount.observe(viewLifecycleOwner) { updateProgressBar() }
 
+        viewModel.incompleteTasks.observe(viewLifecycleOwner, Observer { tasks ->
+            tasks?.let {
+                taskAdapter.submitList(it)
+            }
+
+        })
 
 
     }
+
     private fun updateProgressBar() {
         val completedTasks = viewModel.completedTaskCount.value ?: 0
         val incompleteTasks = viewModel.inCompletedTaskCount.value ?: 0
         val totalTasks = completedTasks + incompleteTasks
 
-        Log.d("chekcingTotalTask","${totalTasks.toString()}  ${completedTasks.toString()}   ${incompleteTasks.toString()}" )
+        Log.d(
+            "chekcingTotalTask",
+            "${totalTasks.toString()}  ${completedTasks.toString()}   ${incompleteTasks.toString()}"
+        )
 
         if (totalTasks > 0) {
             val progress = (completedTasks.toFloat() / totalTasks) * 100
-            binding.progressView.progress= progress
-            binding.progressView.labelText = "Completed: $completedTasks / $totalTasks"
+            binding.progressViewCompleted.progress = progress
+
+            binding.progressViewCompleted.labelText = "Completed: $completedTasks / $totalTasks"
+
 //            binding.progressView.labelText = "${progress.toInt()}%"
+
+            val progressPending = (incompleteTasks.toFloat() / totalTasks) * 100
+            binding.progressViewPending.progress = progressPending
+            binding.progressViewPending.labelText = "Pending: $incompleteTasks / $totalTasks"
         } else {
-            binding.progressView.progress=(0f)
-            binding.progressView.labelText = "No tasks"
+            binding.progressViewPending.progress = (0f)
+            binding.progressViewPending.labelText = "No tasks"
 //            binding.progressView.progressText = "0%"
         }
+
     }
+
+    private fun onTaskCompleted(task: Task) {
+        Log.d("taskChecking", task.toString())
+        val updateTask = task.copy(
+            title = task.title,
+            description = task.description,
+            todayDate = task.todayDate,
+            dueDate = task.dueDate,
+            completed = !task.completed
+        )
+        viewModel.updateTask(updateTask)
+
+    }
+
+    private fun onTaskLongHold(task: Task) {
+        val bundle = Bundle()
+        bundle.putSerializable("task", Gson().toJson(task))
+        findNavController().navigate(R.id.action_homeFragment_to_addTaskFragment, bundle)
+        Log.d("task response", task.toString())
+    }
+
 
     private fun updatePieChart() {
         val highPriority = viewModel.highPriorityCount.value ?: 0
@@ -117,8 +162,8 @@ class DashboardFragment : Fragment() {
         data.setValueTextColor(Color.WHITE)
         binding.pieChart.data = data
 
-        binding.pieChart.description.text=""
-        binding.pieChart.description.isEnabled=false
+        binding.pieChart.description.text = ""
+        binding.pieChart.description.isEnabled = false
         binding.pieChart.highlightValues(null)
         binding.pieChart.invalidate()
     }
@@ -126,7 +171,7 @@ class DashboardFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding=null
+        _binding = null
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.lens_assignment.ui.homeFragment
+package com.example.lens_assignment.viewModelPackage
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -11,6 +11,7 @@ import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -39,9 +40,28 @@ class TaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewMode
     val inCompletedTaskCount :LiveData<Int> = _inCompletedTaskCount
 
 
+    private val _incompleteTasks = MutableLiveData<List<Task>>()
+    val incompleteTasks: LiveData<List<Task>> get() = _incompleteTasks
+
     init {
         calculatePriorityCounts()
         calculateCompletedTask()
+        fetchIncompleteTasksSortedByPriority()
+    }
+
+
+    // Fetch incomplete tasks ordered by priority
+    private fun fetchIncompleteTasksSortedByPriority() = viewModelScope.launch {
+        taskDao.getIncompleteTasksSortedByPriority().collect { tasks ->
+            // Store tasks in a single ArrayList sorted by priority
+            val sortedTasks = mutableListOf<Task>()
+            sortedTasks.addAll(tasks.filter { it.priorityLevel == Constants.HIGH })
+            sortedTasks.addAll(tasks.filter { it.priorityLevel == Constants.MEDIUM })
+            sortedTasks.addAll(tasks.filter { it.priorityLevel == Constants.LOW })
+
+            // Update MutableLiveData with the sorted list
+            _incompleteTasks.postValue(sortedTasks)
+        }
     }
 
     private fun calculateCompletedTask() = viewModelScope.launch {

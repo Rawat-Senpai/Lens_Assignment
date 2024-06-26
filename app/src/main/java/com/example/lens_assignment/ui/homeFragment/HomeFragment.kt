@@ -21,7 +21,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.lens_assignment.R
 import com.example.lens_assignment.adapters.TaskListAdapter
 import com.example.lens_assignment.data.local.entity.Task
@@ -29,6 +28,7 @@ import com.example.lens_assignment.databinding.DeletePopupBinding
 import com.example.lens_assignment.databinding.FragmentHomeBinding
 import com.example.lens_assignment.utils.SwipeToDeleteCallback
 import com.example.lens_assignment.utils.TaskActionListener
+import com.example.lens_assignment.viewModelPackage.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint

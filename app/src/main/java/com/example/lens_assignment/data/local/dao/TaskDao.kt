@@ -26,4 +26,11 @@ interface TaskDao {
     @Delete
     suspend fun  deleteTask(task:Task)
 
+
+    @Query("SELECT * FROM task WHERE completed = 0 ORDER BY " +
+            "CASE WHEN priorityLevel = 'HIGH' THEN 1 " +
+            "WHEN priorityLevel = 'MEDIUM' THEN 2 " +
+            "WHEN priorityLevel = 'LOW' THEN 3 END")
+    fun getIncompleteTasksSortedByPriority(): Flow<List<Task>>
+
 }
