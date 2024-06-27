@@ -92,7 +92,7 @@ class MainActivity :  ThemeActivity() {
         addNewFragment()
 
 
-        setLocale(appInfo.getLanguage()?:"en",this)
+//        setLocale(appInfo.getLanguage()?:"en",this)
 
         authenticateUser()
 

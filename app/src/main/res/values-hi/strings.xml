@@ -28,4 +28,6 @@
     <string name="something_about_the_user">उपयोगकर्ता के बारे में कुछ</string>
     <string name="hindi">हिन्दी</string>
     <string name="english">अंग्रेजी</string>
+    <string name="add_task">कार्य जोड़ें</string>
+    <string name="edit_task">कार्य संपादित करें</string>
 </resources>

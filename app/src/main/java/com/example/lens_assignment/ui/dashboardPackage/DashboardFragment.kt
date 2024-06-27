@@ -60,6 +60,7 @@ class DashboardFragment : ThemeFragment() {
             adapter = taskAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+        viewModel.refreshData()
         bindObserver()
 
     }
@@ -95,7 +96,6 @@ class DashboardFragment : ThemeFragment() {
     private fun bindObserver() {
 
         // observing all task priority count  from the view model about the
-
         viewModel.highPriorityCount.observe(viewLifecycleOwner) {
             updatePieChart()
             binding.highPriorityCount.text =  (viewModel.highPriorityCount.value ?: 0).toString()
@@ -108,7 +108,6 @@ class DashboardFragment : ThemeFragment() {
             updatePieChart()
             binding.lowPriorityCount.text = (viewModel.lowPriorityCount.value ?: 0).toString()
         }
-
         // observing all completed and pending task  count  from the view model about the
 
         viewModel.completedTaskCount.observe(viewLifecycleOwner) { updateProgressBar() }
@@ -139,9 +138,6 @@ class DashboardFragment : ThemeFragment() {
             binding.progressViewCompleted.progress = progress
             binding.progressViewCompleted.labelText = "Completed: $completedTasks / $totalTasks"
 
-
-
-
             val progressPending = (incompleteTasks.toFloat() / totalTasks) * 100
             binding.progressViewPending.progress = progressPending
             binding.progressViewPending.labelText = "Pending: $incompleteTasks / $totalTasks"
@@ -162,6 +158,7 @@ class DashboardFragment : ThemeFragment() {
             completed = !task.completed
         )
         viewModel.updateTask(updateTask)
+        viewModel.refreshData()
 
     }
 

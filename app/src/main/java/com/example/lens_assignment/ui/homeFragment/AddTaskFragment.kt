@@ -85,6 +85,11 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
             Places.initialize(requireContext(), "AIzaSyAXzDd0QhaE7aF1l75w_zoE3mtjamQCmV0")
         }
 
+        binding.imageView.setOnClickListener(){
+            findNavController().popBackStack()
+        }
+
+
         setInitialState()
 
 
@@ -94,6 +99,9 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
         val myAppTheme = appTheme as MyAppTheme
 
         binding.apply {
+
+
+
             background.setBackgroundColor(myAppTheme.backgroundColor(requireContext()))
 
             taskTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
@@ -117,6 +125,10 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
 
             taskLocation.setTextColor(myAppTheme.mainEditTextColor(requireContext()))
             taskLocation.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
+
+            imageView.setColorFilter(myAppTheme.changeIconColor(requireContext()))
+            heading.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
         }
 
 
@@ -128,10 +140,12 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
         val jsonTask = arguments?.getString("task")
         if (jsonTask != null) {
 
+
             task = Gson().fromJson(jsonTask, Task::class.java)
 
             task?.let {
                 binding.apply {
+                    heading.text= context?.getString(R.string.edit_task)
                     layoutCompleted.isVisible=true
                     taskTitle.setText(it.title)
                     taskDescription.setText(it.description)
@@ -139,7 +153,7 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
                     latitude = it.latitude
                     longitude = it.longitude
 
-                    val formatter = SimpleDateFormat("dd.MM.yyyy")
+                    val formatter = SimpleDateFormat("dd/MMM/yyyy")
                     dueDate.text = formatter.format(it.dueDate)
                     setPriority(it.priorityLevel!!)
                 }
@@ -185,6 +199,7 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
             setCurrentDate()
 
             binding.apply {
+                heading.text= context?.getString(R.string.add_task)
                 layoutCompleted.isVisible=false
                 dueDate.setOnClickListener() {
                     showDatePickerDialog()
@@ -223,7 +238,7 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
 
     private fun setCurrentDate() {
         val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd/MMM/yyyy", Locale.getDefault())
         val currentDate = dateFormat.format(calendar.time)
         binding.dueDate.setText(currentDate)
         selectedDateInMillis = calendar.timeInMillis

@@ -160,6 +160,23 @@ class SettingFragment : ThemeFragment() {
 
         // Restart activity to apply the new language
         (context as? Activity)?.recreate()
+
+//        val locale = Locale(languageCode)
+//        Locale.setDefault(locale)
+//
+//        val resources = context.resources
+//        val config = resources.configuration
+//
+//        // Update the locale in the configuration
+//        config.setLocale(locale)
+//
+//        // Update the resources with the new configuration
+//        context.createConfigurationContext(config)
+//
+//        // Notify the activity to recreate if the context is an instance of an activity
+//        if (context is Activity) {
+//            context.recreate()
+//        }
     }
 
 

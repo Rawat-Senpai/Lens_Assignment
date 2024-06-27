@@ -49,6 +49,11 @@ class TaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewMode
         fetchIncompleteTasksSortedByPriority()
     }
 
+    fun refreshData(){
+        calculatePriorityCounts()
+        calculateCompletedTask()
+        fetchIncompleteTasksSortedByPriority()
+    }
 
     // Fetch incomplete tasks ordered by priority
     private fun fetchIncompleteTasksSortedByPriority() = viewModelScope.launch {
@@ -66,9 +71,7 @@ class TaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewMode
 
     private fun calculateCompletedTask() = viewModelScope.launch {
        val tasks = taskDao.getAllTask().first()
-
         Log.d("total array list",task.toString())
-
         val completed = tasks.count {it.completed}
         val pending = tasks.count { !it.completed }
 

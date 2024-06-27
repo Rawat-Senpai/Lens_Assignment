@@ -25,4 +25,6 @@
     <string name="something_about_the_user">Something about the user</string>
     <string name="hindi">Hindi</string>
     <string name="english">English</string>
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
 </resources>
