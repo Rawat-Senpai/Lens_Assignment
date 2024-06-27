@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.dolatkia.animatedThemeManager.AppTheme
 import com.dolatkia.animatedThemeManager.ThemeFragment
 import com.dolatkia.animatedThemeManager.ThemeManager
@@ -71,6 +73,15 @@ class SettingFragment : ThemeFragment() {
     private fun setUpInitialState() {
         binding.apply {
 
+
+            hindiButton.setOnClickListener {
+                selectLanguageButton(hindiButton, englishButton)
+            }
+
+            englishButton.setOnClickListener {
+                selectLanguageButton(englishButton, hindiButton)
+            }
+
             themeChange.setOnClickListener(){
                 if(appInfo.getDarkMode()){
                     themeChange.setMinAndMaxProgress(0.5f, 1f);
@@ -93,6 +104,13 @@ class SettingFragment : ThemeFragment() {
             }
 
         }
+    }
+
+    fun selectLanguageButton(selectedButton: TextView, unselectedButton: TextView) {
+        selectedButton.isSelected = true
+        selectedButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.selected_text_color)) // define selected_text_color in colors.xml
+        unselectedButton.isSelected = false
+        unselectedButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.unselected_text_color)) // define unselected_text_color in colors.xml
     }
 
 

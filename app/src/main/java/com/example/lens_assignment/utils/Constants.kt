@@ -7,4 +7,9 @@ object Constants {
     const val MEDIUM="Medium"
     const val HIGH="High"
     const val THEME="Theme"
+
+    const val LANG="Lang"
+    const val HINDI="Hindi"
+    const val ENGLISH="English"
+
 }

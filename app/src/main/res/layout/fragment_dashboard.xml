@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
+    android:id="@+id/backgroundOne"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,26 +13,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:padding="20dp">
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/dashboardHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DashBoard"
+            android:textSize="20sp"
+            android:fontFamily="@font/inter_semibold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"/>
 
 
-    <com.github.mikephil.charting.charts.PieChart
+
+        <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
         android:layout_width="0dp"
         android:layout_height="300dp"
         app:layout_constraintWidth_percent=".5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/dashboardHeading" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/background"
             android:layout_width="0dp"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/pieChart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/pieChart"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent=".5" >
-
+            app:layout_constraintTop_toBottomOf="@+id/dashboardHeading"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintWidth_percent=".5">
 
 
             <!-- High Priority Task Label -->
@@ -39,11 +54,10 @@
                 android:id="@+id/highPriorityLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:padding="4dp"
                 android:fontFamily="@font/inter"
-                android:text="High Priority Tasks"
-                android:textSize="18sp"
+                android:padding="4dp"
+                android:text="High Priority"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,13 +66,11 @@
                 android:id="@+id/highPriorityCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:text="0"
                 android:textSize="18sp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@id/highPriorityLabel"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:padding="8dp"/>
+                app:layout_constraintTop_toTopOf="@+id/highPriorityLabel" />
 
             <!-- Medium Priority Task Label -->
             <TextView
@@ -68,8 +80,8 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/inter"
                 android:padding="4dp"
-                android:text="Medium Priority Tasks"
-                android:textSize="18sp"
+                android:text="Medium Priority"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/highPriorityCount" />
 
@@ -78,13 +90,11 @@
                 android:id="@+id/mediumPriorityCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:text="0"
                 android:textSize="18sp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@id/mediumPriorityLabel"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:padding="8dp"/>
+                app:layout_constraintTop_toTopOf="@+id/mediumPriorityLabel" />
 
             <!-- Low Priority Task Label -->
             <TextView
@@ -92,10 +102,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:padding="4dp"
                 android:fontFamily="@font/inter"
-                android:text="Low Priority Tasks"
-                android:textSize="18sp"
+                android:padding="4dp"
+                android:text="Low Priority "
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mediumPriorityCount" />
 
@@ -104,13 +114,11 @@
                 android:id="@+id/lowPriorityCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:text="0"
                 android:textSize="18sp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@id/lowPriorityLabel"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:padding="8dp"/>
+                app:layout_constraintTop_toTopOf="@+id/lowPriorityLabel" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -138,9 +146,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskProgress"
-        app:progressView_colorBackground="@color/white"
-        app:progressView_labelColorInner="@color/white"
-        app:progressView_labelColorOuter="@color/black"
+
+        app:progressView_colorGradientStart="@color/white"
+        app:progressView_colorGradientCenter="@color/completedTasksMid"
+        app:progressView_colorGradientEnd="@color/completedTasks"
         app:progressView_labelSize="12sp"
         app:progressView_radius="12dp" />
 
@@ -153,9 +162,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressViewCompleted"
-        app:progressView_colorBackground="@color/white"
-        app:progressView_labelColorInner="@color/white"
-        app:progressView_labelColorOuter="@color/black"
+
+        app:progressView_colorGradientStart="@color/white"
+        app:progressView_colorGradientCenter="@color/pendigTask"
+        app:progressView_colorGradientEnd="@color/quantum_orange"
         app:progressView_labelSize="12sp"
         app:progressView_radius="12dp" />
 
@@ -166,6 +176,7 @@
         android:layout_height="wrap_content"
         android:text="Pending Task"
         android:textSize="20dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/inter_semibold"
         android:letterSpacing="0.01"
         app:layout_constraintTop_toBottomOf="@+id/progressViewPending" />
@@ -174,6 +185,7 @@
             android:id="@+id/rvPendingTasks"
             android:layout_width="match_parent"
             android:layout_height="400dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />

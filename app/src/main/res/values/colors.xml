@@ -17,6 +17,12 @@
     <color name="priority_high">#EF9A9A</color>
 
 
+    <color name ="completedTasks">#64D9FF</color>
+    <color name="completedTasksMid">#AfE6F7</color>
+
+    <color name="pendigTask">#FFB03D</color>
+
+
     <!--   dark theme  -->
     <color name="darkBackground">#1B1B1C</color>
     <color name="darkWhiteIcons">#FFFFFFFF</color>
@@ -58,5 +64,12 @@
     <color name="dark_onSurfaceColor">#FFFFFF</color>
     <color name="dark_onErrorColor">#000000</color>
 
+
+    <color name="button_selected">#FFBB86FC</color> <!-- Adjust colors as needed -->
+    <color name="button_pressed">#FF6200EE</color>
+    <color name="button_default">#E0E0E0</color> <!-- Or use transparent if needed -->
+
+    <color name="selected_text_color">#FFFFFF</color> <!-- Adjust colors as needed -->
+    <color name="unselected_text_color">#000000</color> <!-- Adjust colors as needed -->
 
 </resources>

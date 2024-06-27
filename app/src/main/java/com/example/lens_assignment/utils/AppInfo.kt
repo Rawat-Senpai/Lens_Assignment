@@ -20,6 +20,16 @@ class AppInfo @Inject constructor(@ApplicationContext context:Context) {
         return prefs.getBoolean(Constants.THEME,false)
     }
 
+    fun setLanguage(lang:String){
+        val editor= prefs.edit()
+        editor.putString(Constants.LANG,lang)
+        editor.apply()
+    }
+
+    fun getLanguage():String?{
+        return prefs.getString(Constants.LANG,Constants.ENGLISH)
+    }
+
 
 
 }

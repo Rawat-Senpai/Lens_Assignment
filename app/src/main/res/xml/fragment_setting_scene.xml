@@ -30,9 +30,7 @@
             android:id="@+id/personImageSquare"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
-            motion:layout_constraintStart_toEndOf="@+id/backBtn"
             motion:layout_constraintTop_toTopOf="parent">
 
 

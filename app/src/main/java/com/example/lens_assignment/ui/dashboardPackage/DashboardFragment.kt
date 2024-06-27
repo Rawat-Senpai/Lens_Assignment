@@ -19,6 +19,8 @@ import com.example.lens_assignment.R
 import com.example.lens_assignment.adapters.TaskListAdapter
 import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.FragmentDashboardBinding
+import com.example.lens_assignment.utils.AppInfo
+import com.example.lens_assignment.utils.MyAppTheme
 import com.example.lens_assignment.viewModelPackage.TaskViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -27,6 +29,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.MPPointF
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -36,6 +39,7 @@ class DashboardFragment : ThemeFragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<TaskViewModel>()
     private lateinit var taskAdapter: TaskListAdapter
+    @Inject lateinit var appInfo:AppInfo
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,6 +66,30 @@ class DashboardFragment : ThemeFragment() {
     }
 
     override fun syncTheme(appTheme: AppTheme) {
+
+        val myAppTheme = appTheme as MyAppTheme
+        binding.apply {
+
+            background.setBackgroundColor(myAppTheme.backgroundColor(requireContext()))
+            backgroundOne.setBackgroundColor(myAppTheme.backgroundColor(requireContext()))
+            textView.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+            taskProgress.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+            highPriorityLabel.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            highPriorityCount.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+            mediumPriorityLabel.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            mediumPriorityCount.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+            lowPriorityLabel.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            lowPriorityCount.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+            dashboardHeading.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+            textView.setTextColor(myAppTheme.mainTextColor(requireContext()))
+//            userStatus.setTextColor(myAppTheme.mainTextColor(requireContext()))
+        }
 
     }
 
@@ -101,10 +129,10 @@ class DashboardFragment : ThemeFragment() {
         if (totalTasks > 0) {
             val progress = (completedTasks.toFloat() / totalTasks) * 100
             binding.progressViewCompleted.progress = progress
-
             binding.progressViewCompleted.labelText = "Completed: $completedTasks / $totalTasks"
 
-//            binding.progressView.labelText = "${progress.toInt()}%"
+
+
 
             val progressPending = (incompleteTasks.toFloat() / totalTasks) * 100
             binding.progressViewPending.progress = progressPending
@@ -112,7 +140,6 @@ class DashboardFragment : ThemeFragment() {
         } else {
             binding.progressViewPending.progress = (0f)
             binding.progressViewPending.labelText = "No tasks"
-//            binding.progressView.progressText = "0%"
         }
 
     }
@@ -148,25 +175,39 @@ class DashboardFragment : ThemeFragment() {
         if (mediumPriority > 0) entries.add(PieEntry(mediumPriority.toFloat(), "Medium"))
         if (lowPriority > 0) entries.add(PieEntry(lowPriority.toFloat(), "Low"))
 
-        val dataSet = PieDataSet(entries, "Task Priority")
+        val dataSet = PieDataSet(entries, "Priority")
         dataSet.setDrawIcons(false)
         dataSet.sliceSpace = 3f
         dataSet.iconsOffset = MPPointF(0f, 40f)
         dataSet.selectionShift = 5f
+
+
+        Log.d("chckingData",appInfo.getDarkMode().toString())
+        val textColor = if (appInfo.getDarkMode()) {
+            ContextCompat.getColor(requireContext(), R.color.white)
+        } else {
+            ContextCompat.getColor(requireContext(), R.color.black)
+        }
 
         val colors = arrayListOf(
             ContextCompat.getColor(requireContext(), R.color.high_priority),
             ContextCompat.getColor(requireContext(), R.color.medium_priority),
             ContextCompat.getColor(requireContext(), R.color.low_priority)
         )
+        dataSet.setValueTextColor(textColor)
+
         dataSet.colors = colors
+
 
         val data = PieData(dataSet)
         data.setValueFormatter(PercentFormatter())
-        data.setValueTextSize(15f)
+        data.setValueTextSize(14f)
         data.setValueTypeface(Typeface.DEFAULT_BOLD)
         data.setValueTextColor(Color.WHITE)
+
+
         binding.pieChart.data = data
+        binding.pieChart.setEntryLabelColor(Color.WHITE)
 
         binding.pieChart.description.text = ""
         binding.pieChart.description.isEnabled = false
