@@ -45,7 +45,6 @@ class DashboardFragment : ThemeFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         _binding = FragmentDashboardBinding.inflate(layoutInflater, container, false)
         return binding.root
 
@@ -97,9 +96,18 @@ class DashboardFragment : ThemeFragment() {
 
         // observing all task priority count  from the view model about the
 
-        viewModel.highPriorityCount.observe(viewLifecycleOwner) { updatePieChart() }
-        viewModel.mediumPriorityCount.observe(viewLifecycleOwner) { updatePieChart() }
-        viewModel.lowPriorityCount.observe(viewLifecycleOwner) { updatePieChart() }
+        viewModel.highPriorityCount.observe(viewLifecycleOwner) {
+            updatePieChart()
+            binding.highPriorityCount.text =  (viewModel.highPriorityCount.value ?: 0).toString()
+        }
+        viewModel.mediumPriorityCount.observe(viewLifecycleOwner) {
+            updatePieChart()
+            binding.mediumPriorityCount.text =  (viewModel.mediumPriorityCount.value ?: 0).toString()
+        }
+        viewModel.lowPriorityCount.observe(viewLifecycleOwner) {
+            updatePieChart()
+            binding.lowPriorityCount.text = (viewModel.lowPriorityCount.value ?: 0).toString()
+        }
 
         // observing all completed and pending task  count  from the view model about the
 
@@ -158,10 +166,7 @@ class DashboardFragment : ThemeFragment() {
     }
 
     private fun onTaskLongHold(task: Task) {
-//        val bundle = Bundle()
-//        bundle.putSerializable("task", Gson().toJson(task))
-//        findNavController().navigate(R.id.action_homeFragment_to_addTaskFragment, bundle)
-//        Log.d("task response", task.toString())
+
     }
 
 

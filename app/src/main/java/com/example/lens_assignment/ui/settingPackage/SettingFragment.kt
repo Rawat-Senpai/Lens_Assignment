@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.dolatkia.animatedThemeManager.AppTheme
 import com.dolatkia.animatedThemeManager.ThemeFragment
 import com.dolatkia.animatedThemeManager.ThemeManager
@@ -117,6 +119,24 @@ class SettingFragment : ThemeFragment() {
                 ThemeManager.instance.reverseChangeTheme(DarkTheme(),it,2300)
 
             }
+
+
+
+            background.setTransitionListener(object : MotionLayout.TransitionListener {
+                override fun onTransitionStarted(layout: MotionLayout?, startId: Int, endId: Int) {}
+
+                override fun onTransitionChange(layout: MotionLayout?, startId: Int, endId: Int, progress: Float) {
+                    Glide.with(personImageSquare).load(R.drawable.profile_photo).placeholder(R.drawable.profile_photo).circleCrop().into(personImageSquare)
+                }
+                override fun onTransitionCompleted(layout: MotionLayout?, currentId: Int) {
+                    if(currentId == R.id.start){
+                        Glide.with(personImageSquare).load(R.drawable.profile_photo).placeholder(R.drawable.profile_photo).into(personImageSquare)
+                    }else if (currentId == R.id.end){
+                        Glide.with(personImageSquare).load(R.drawable.profile_photo).placeholder(R.drawable.profile_photo).circleCrop().into(personImageSquare)
+                    }
+                }
+                override fun onTransitionTrigger(layout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) {}
+            })
 
         }
     }

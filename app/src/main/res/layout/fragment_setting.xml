@@ -28,7 +28,7 @@
         android:layout_height="300dp"
         android:layout_gravity="center_vertical"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_default_person"
+        android:src="@drawable/profile_photo"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="20dp" />
 

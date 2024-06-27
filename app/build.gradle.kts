@@ -79,7 +79,6 @@ dependencies {
 
     implementation ("com.dolatkia:animated-theme-manager:1.1.4")
 
-
     // google place api
     implementation ("com.google.android.libraries.places:places:2.5.0")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
@@ -87,14 +86,11 @@ dependencies {
     // pi charts
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
-
     // progress bar
     implementation ("com.github.skydoves:progressview:1.1.3")
 
     // motion layout
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
-
-
 
     // ripple effect
     implementation ("com.dolatkia:animated-theme-manager:1.1.4")
@@ -107,6 +103,10 @@ dependencies {
 
     // biometric dependency
     implementation ("androidx.biometric:biometric:1.1.0")
+
+    // glide
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
 
 
 }
