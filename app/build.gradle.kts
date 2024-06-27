@@ -105,6 +105,9 @@ dependencies {
     // lottie animation
     implementation ("com.airbnb.android:lottie:4.2.2")
 
+    // biometric dependency
+    implementation ("androidx.biometric:biometric:1.1.0")
+
 
 }
 
