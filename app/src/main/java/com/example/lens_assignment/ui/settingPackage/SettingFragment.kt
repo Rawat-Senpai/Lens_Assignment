@@ -1,5 +1,7 @@
 package com.example.lens_assignment.ui.settingPackage
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,10 +16,12 @@ import com.dolatkia.animatedThemeManager.ThemeManager
 import com.example.lens_assignment.R
 import com.example.lens_assignment.databinding.FragmentSettingBinding
 import com.example.lens_assignment.utils.AppInfo
+import com.example.lens_assignment.utils.Constants
 import com.example.lens_assignment.utils.DarkTheme
 import com.example.lens_assignment.utils.LightTheme
 import com.example.lens_assignment.utils.MyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -68,6 +72,13 @@ class SettingFragment : ThemeFragment() {
 
     private fun bindObservers() {
 
+        if(appInfo.getLanguage() == Constants.ENGLISH){
+            selectLanguageButton(binding.englishButton, binding.hindiButton)
+        }else{
+            selectLanguageButton(binding.hindiButton,binding.englishButton)
+        }
+
+
     }
 
     private fun setUpInitialState() {
@@ -75,11 +86,15 @@ class SettingFragment : ThemeFragment() {
 
 
             hindiButton.setOnClickListener {
+                appInfo.setLanguage(Constants.HINDI)
                 selectLanguageButton(hindiButton, englishButton)
+                setLocale(Constants.HINDI,requireContext())
             }
 
             englishButton.setOnClickListener {
+                appInfo.setLanguage(Constants.ENGLISH)
                 selectLanguageButton(englishButton, hindiButton)
+                setLocale(Constants.ENGLISH,requireContext())
             }
 
             themeChange.setOnClickListener(){
@@ -111,6 +126,20 @@ class SettingFragment : ThemeFragment() {
         selectedButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.selected_text_color)) // define selected_text_color in colors.xml
         unselectedButton.isSelected = false
         unselectedButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.unselected_text_color)) // define unselected_text_color in colors.xml
+    }
+
+    fun setLocale(languageCode: String, context: Context) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val resources = context.resources
+        val config = resources.configuration
+        config.setLocale(locale)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        // Restart activity to apply the new language
+        (context as? Activity)?.recreate()
     }
 
 

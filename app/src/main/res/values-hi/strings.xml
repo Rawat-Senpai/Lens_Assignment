@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="task_title">Task Title</string>
-    <string name="task_description">Task Description</string>
-    <string name="due_date"><b>Due Date</b></string>
-    <string name="priority_level">Priority Level</string>
-    <string name="task_location">Task Location</string>
-    <string name="completed">Completed</string>
-    <string name="delete">Delete</string>
-    <string name="are_you_sure_you_want_to_delete_this_note">Are you Sure you want to delete this note?</string>
-    <string name="enter_task_title">Enter task title</string>
-    <string name="enter_task_description">Enter task description</string>
-    <string name="enter_due_date">Enter due date</string>
-    <string name="enter_task_location">Enter task location</string>
-    <string name="submit">Submit</string>
-    <string name="dashboard">DashBoard</string>
-    <string name="high_priority">High Priority</string>
-    <string name="medium_priority">Medium Priority</string>
-    <string name="low_priority">Low Priority</string>
-    <string name="tasks">Tasks</string>
-    <string name="pending_task">Pending Task</string>
-    <string name="search">Search</string>
-    <string name="select_language">Select Language</string>
-    <string name="user_name">User Name</string>
-    <string name="something_about_the_user">Something about the user</string>
-    <string name="hindi">Hindi</string>
-    <string name="english">English</string>
+    <string name="app_name">Lens_Assignment</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="task_title">कार्य का शीर्षक</string>
+    <string name="task_description">कार्य का विवरण</string>
+    <string name="due_date"><b>समाप्ति तिथि</b></string>
+    <string name="priority_level">प्राथमिकता स्तर</string>
+    <string name="task_location">कार्य का स्थान</string>
+    <string name="completed">पूर्ण</string>
+    <string name="delete">हटाएं</string>
+    <string name="are_you_sure_you_want_to_delete_this_note">क्या आप वाकई इस नोट को हटाना चाहते हैं?</string>
+    <string name="enter_task_title">कार्य का शीर्षक दर्ज करें</string>
+    <string name="enter_task_description">कार्य का विवरण दर्ज करें</string>
+    <string name="enter_due_date">समाप्ति तिथि दर्ज करें</string>
+    <string name="enter_task_location">कार्य का स्थान दर्ज करें</string>
+    <string name="submit">प्रस्तुत करें</string>
+    <string name="dashboard">डैशबोर्ड</string>
+    <string name="high_priority">उच्च प्राथमिकता</string>
+    <string name="medium_priority">मध्यम प्राथमिकता</string>
+    <string name="low_priority">निम्न प्राथमिकता</string>
+    <string name="tasks">कार्य</string>
+    <string name="pending_task">लंबित कार्य</string>
+    <string name="search">खोज</string>
+    <string name="select_language">भाषा चुनें</string>
+    <string name="user_name">उपयोगकर्ता नाम</string>
+    <string name="something_about_the_user">उपयोगकर्ता के बारे में कुछ</string>
+    <string name="hindi">हिन्दी</string>
+    <string name="english">अंग्रेजी</string>
 </resources>

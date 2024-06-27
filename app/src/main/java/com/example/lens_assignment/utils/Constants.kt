@@ -9,7 +9,7 @@ object Constants {
     const val THEME="Theme"
 
     const val LANG="Lang"
-    const val HINDI="Hindi"
-    const val ENGLISH="English"
+    const val HINDI="hi"
+    const val ENGLISH="en"
 
 }
