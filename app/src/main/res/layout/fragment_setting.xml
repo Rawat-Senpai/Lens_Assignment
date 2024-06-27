@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    android:id="@+id/background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/fragment_setting_scene"
-    tools:context=".ui.settingPackage.SettingFragment">
+    tools:context=".ui.settingPackage.SettingFragment"
+    android:padding="20dp">
 
 
     <ImageView
@@ -15,9 +18,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:layout_marginStart="15dp"
-
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -50,10 +51,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:textColor="@color/white"
+
         app:layout_constraintBottom_toBottomOf="@+id/personImageSquare"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Ketan Singh" />
+       />
 
     <TextView
         android:id="@+id/onlineStatus"
@@ -63,14 +64,13 @@
         android:textColor="@color/grey"
         app:layout_constraintStart_toStartOf="@+id/personName"
         app:layout_constraintTop_toBottomOf="@+id/personName"
-        tools:text="online" />
+       />
 
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +78,9 @@
         app:layout_constraintTop_toBottomOf="@+id/personImageSquare">
 
         <TextView
+            android:id="@+id/userName"
+            android:text="User Name"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -87,9 +90,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-
+            android:textSize="16sp"
+            android:text="Something about the user"
             android:letterSpacing="0.01"
-            android:textColor="@color/black"
             />
 
 
@@ -111,14 +114,14 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
             android:text="Select Language"
             android:textSize="18sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="20dp"
             app:layout_constraintBottom_toTopOf="@id/hindiButton"
-            android:layout_marginTop="16dp"
-            android:gravity="center"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Hindi Button (TextView styled as button) -->
         <TextView

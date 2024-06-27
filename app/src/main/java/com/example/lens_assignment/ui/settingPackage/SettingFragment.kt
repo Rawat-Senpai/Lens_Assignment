@@ -1,6 +1,7 @@
 package com.example.lens_assignment.ui.settingPackage
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +52,14 @@ class SettingFragment : ThemeFragment() {
         val myAppTheme = appTheme as MyAppTheme
         binding.apply {
 
+            background.setBackgroundColor(myAppTheme.backgroundColor(requireContext()))
+            textView.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            notificationTextView.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            dataLayout.setBackgroundColor(myAppTheme.backgroundColor(requireContext()))
+            linearLayout4.setBackgroundColor(myAppTheme.backgroundColor(requireContext()))
 
+            userName.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            userStatus.setTextColor(myAppTheme.mainTextColor(requireContext()))
         }
 
     }
@@ -64,23 +72,23 @@ class SettingFragment : ThemeFragment() {
         binding.apply {
 
             themeChange.setOnClickListener(){
-
                 if(appInfo.getDarkMode()){
                     themeChange.setMinAndMaxProgress(0.5f, 1f);
                     themeChange.speed=.5f
                     themeChange.playAnimation()
-                    appInfo.setDarkMode(true)
-                    ThemeManager.instance.changeTheme(DarkTheme(),it,2300)
+                    appInfo.setDarkMode(false)
+                    ThemeManager.instance.changeTheme(LightTheme(),it,2300)
 
 
                 }else{
                     themeChange.setMinAndMaxProgress(0.0f, .5f);
                     themeChange.speed=.5f
                     themeChange.playAnimation()
-                    appInfo.setDarkMode(false)
+                    appInfo.setDarkMode(true)
                 }
 
-                ThemeManager.instance.reverseChangeTheme(LightTheme(),it,2300)
+                Log.d("checkingNightMode",appInfo.getDarkMode().toString())
+                ThemeManager.instance.reverseChangeTheme(DarkTheme(),it,2300)
 
             }
 

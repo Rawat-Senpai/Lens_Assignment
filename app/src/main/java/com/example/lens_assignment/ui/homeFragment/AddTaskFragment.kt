@@ -20,6 +20,7 @@ import com.dolatkia.animatedThemeManager.ThemeFragment
 import com.example.lens_assignment.R
 import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.FragmentAddTaskBinding
+import com.example.lens_assignment.utils.MyAppTheme
 import com.example.lens_assignment.viewModelPackage.TaskViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -38,6 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.PriorityQueue
 
 
 @AndroidEntryPoint
@@ -64,9 +66,6 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        // return inflater.inflate(R.layout.fragment_add_task, container, false)
-
         _binding = FragmentAddTaskBinding.inflate(layoutInflater, container, false)
 
         return binding.root
@@ -92,6 +91,30 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
     }
 
     override fun syncTheme(appTheme: AppTheme) {
+        val myAppTheme = appTheme as MyAppTheme
+
+        binding.apply {
+            background.setBackgroundColor(myAppTheme.backgroundColor(requireContext()))
+
+            taskTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            taskDescriptionTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            dueDateTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            priorityTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            taskLocation.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+            taskTitle.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            taskTitle.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
+
+            taskDescription.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            taskDescription.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
+
+            dueDate.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            dueDate.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
+
+            taskLocation.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            taskLocation.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
+        }
+
 
     }
 

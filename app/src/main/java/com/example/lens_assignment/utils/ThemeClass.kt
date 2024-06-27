@@ -3,7 +3,6 @@ package com.example.lens_assignment.utils
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.example.lens_assignment.R
-
 class LightTheme: MyAppTheme{
     override fun backgroundColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.lightBackground)

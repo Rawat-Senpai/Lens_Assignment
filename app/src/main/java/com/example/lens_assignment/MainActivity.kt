@@ -25,6 +25,8 @@ class MainActivity :  ThemeActivity() {
      private var _binding:ActivityMainBinding ?= null
     private val binding get() = _binding!!
 
+    private var fragmentNumber: Int = 0
+
     private lateinit var navController : NavController
 
     @Inject
@@ -59,9 +61,20 @@ class MainActivity :  ThemeActivity() {
         navController = navHostFragment.navController
 
         setupWithNavController(binding.bottomNavigation,navController)
+        addNewFragment()
 
 
     }
+    fun addNewFragment() {
+        fragmentNumber++
+        val transaction = supportFragmentManager.beginTransaction()
+
+        if (fragmentNumber != 1) {
+            transaction.addToBackStack(null)
+        }
+        transaction.commit()
+    }
+
 
     override fun syncTheme(appTheme: AppTheme) {
         val myAppTheme = appTheme as MyAppTheme

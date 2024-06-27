@@ -11,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:padding="20dp">
 
 
     <com.github.mikephil.charting.charts.PieChart
@@ -22,12 +23,107 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/background"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pieChart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".5" >
+
+
+
+            <!-- High Priority Task Label -->
+            <TextView
+                android:id="@+id/highPriorityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="4dp"
+                android:fontFamily="@font/inter"
+                android:text="High Priority Tasks"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- High Priority Task Count -->
+            <TextView
+                android:id="@+id/highPriorityCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/highPriorityLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="8dp"/>
+
+            <!-- Medium Priority Task Label -->
+            <TextView
+                android:id="@+id/mediumPriorityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/inter"
+                android:padding="4dp"
+                android:text="Medium Priority Tasks"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/highPriorityCount" />
+
+            <!-- Medium Priority Task Count -->
+            <TextView
+                android:id="@+id/mediumPriorityCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/mediumPriorityLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="8dp"/>
+
+            <!-- Low Priority Task Label -->
+            <TextView
+                android:id="@+id/lowPriorityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="4dp"
+                android:fontFamily="@font/inter"
+                android:text="Low Priority Tasks"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mediumPriorityCount" />
+
+            <!-- Low Priority Task Count -->
+            <TextView
+                android:id="@+id/lowPriorityCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/lowPriorityLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="8dp"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <TextView
         android:id="@+id/taskProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tasks"
+        android:textSize="20sp"
+        android:fontFamily="@font/inter_semibold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pieChart"
@@ -70,13 +166,14 @@
         android:layout_height="wrap_content"
         android:text="Pending Task"
         android:textSize="20dp"
+        android:fontFamily="@font/inter_semibold"
+        android:letterSpacing="0.01"
         app:layout_constraintTop_toBottomOf="@+id/progressViewPending" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPendingTasks"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:background="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />

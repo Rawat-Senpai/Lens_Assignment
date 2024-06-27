@@ -28,6 +28,7 @@ import com.example.lens_assignment.adapters.TaskListAdapter
 import com.example.lens_assignment.data.local.entity.Task
 import com.example.lens_assignment.databinding.DeletePopupBinding
 import com.example.lens_assignment.databinding.FragmentHomeBinding
+import com.example.lens_assignment.utils.MyAppTheme
 import com.example.lens_assignment.utils.SwipeToDeleteCallback
 import com.example.lens_assignment.utils.TaskActionListener
 import com.example.lens_assignment.viewModelPackage.TaskViewModel
@@ -64,6 +65,17 @@ class HomeFragment : ThemeFragment(), TaskActionListener {
     }
 
     override fun syncTheme(appTheme: AppTheme) {
+
+        val myAppTheme = appTheme as MyAppTheme
+
+        binding.apply {
+            background.setBackgroundColor(myAppTheme.backgroundColor(requireContext()))
+            searchEdt.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            imageView.setColorFilter(myAppTheme.changeIconColor(requireContext()))
+            heading.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+
+        }
 
     }
 

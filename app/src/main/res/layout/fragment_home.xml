@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FBF0DA"
-        android:padding="20dp">
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
@@ -41,10 +46,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/searchText"
+            style="@style/cardViewLayout"
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:layout_weight="1"
-            style="@style/cardViewLayout"
             android:orientation="horizontal"
             android:padding="5dp"
 
@@ -64,41 +69,38 @@
                     android:layout_height="18dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="2dp"
-                    android:padding="2dp"
+                    android:layout_marginStart="10dp"
                     android:background="@null"
+                    android:padding="2dp"
                     android:src="@drawable/ic_search"
-                    app:tint="@color/grey"
-                    android:layout_marginStart="10dp"/>
+                    app:tint="@color/grey" />
 
                 <EditText
                     android:id="@+id/searchEdt"
+                    style="@style/searchbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/searchbar"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
                     android:backgroundTint="@android:color/transparent"
                     android:gravity="start"
                     android:hint="Search"
-                    android:imeOptions="actionSearch"
 
+                    android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:maxLength="15"
-                    android:layout_marginStart="10dp"
                     android:maxLines="1" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-
-
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/taskRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:minHeight="400dp"
             android:layout_marginTop="15dp"
+            android:minHeight="400dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,10 +110,10 @@
             android:id="@+id/addTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="10dp"
-            android:src="@drawable/baseline_add_24" />
+            android:src="@drawable/baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
