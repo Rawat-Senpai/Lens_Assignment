@@ -2,7 +2,7 @@
 <resources>
     <string name="task_title">Task Title</string>
     <string name="task_description">Task Description</string>
-    <string name="due_date">Due Date</string>
+    <string name="due_date"><b>Due Date</b></string>
     <string name="priority_level">Priority Level</string>
     <string name="task_location">Task Location</string>
     <string name="completed">Completed</string>

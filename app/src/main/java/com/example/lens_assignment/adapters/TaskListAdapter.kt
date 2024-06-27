@@ -29,10 +29,18 @@ class TaskListAdapter(val context:Context , private val onTaskCompleted:(Task)->
             // notes for data
             binding.apply {
 
-                taskTitle.text= task.title
-                taskDescription.text=task.description
-                val formatter = SimpleDateFormat("dd.MM.yyyy")
-                dueDate.text = formatter.format(task.dueDate)
+                "${context.getString(R.string.task_title)}:-  ${task.title}".also { taskTitle.text = it }
+                taskDescription.text= buildString {
+                    append(context.getString(R.string.task_description))
+                    append(":- ")
+                    append(task.description)
+                }
+                val formatter =   SimpleDateFormat("dd/MMM/yyyy")
+                dueDate.text = buildString {
+                    append(context.getString(R.string.due_date))
+                    append(":- ")
+                    append(formatter.format(task.dueDate))
+                }
 
                 if (task.completed){
                     completedCheckbox.isChecked=true
@@ -44,8 +52,16 @@ class TaskListAdapter(val context:Context , private val onTaskCompleted:(Task)->
                         onTaskCompleted(task)
                 }
 
-                priorityLevel.text= task.priorityLevel
-                taskLocation.text=task.location
+                priorityLevel.text= buildString {
+                    append(context.getString(R.string.priority_level))
+                    append(":- ")
+                    append(task.priorityLevel)
+                }
+                taskLocation.text= buildString {
+                    append(context.getString(R.string.task_location))
+                    append(":- ")
+                    append(task.location)
+                }
 
 
                 when(task.priorityLevel){
