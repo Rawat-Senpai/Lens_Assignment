@@ -21,9 +21,11 @@
             android:id="@+id/taskTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Task Title"
+            android:text="@string/task_title"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:fontFamily="@font/inter_semibold"
             android:layout_marginBottom="8dp" />
 
         <!-- Task Description -->
@@ -31,7 +33,9 @@
             android:id="@+id/taskDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Task Description"
+            android:text="@string/task_description"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter"
             android:textSize="14sp"
             android:layout_marginBottom="8dp" />
 
@@ -40,7 +44,9 @@
             android:id="@+id/dueDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Due Date"
+            android:text="@string/due_date"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter"
             android:textSize="14sp"
             android:layout_marginBottom="8dp" />
 
@@ -49,7 +55,9 @@
             android:id="@+id/priorityLevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Priority Level"
+            android:text="@string/priority_level"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter"
             android:textSize="14sp"
             android:layout_marginBottom="8dp" />
 
@@ -59,8 +67,10 @@
             android:id="@+id/taskLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Task Location"
+            android:text="@string/task_location"
+            android:fontFamily="@font/inter"
             android:textSize="14sp"
+            android:textColor="@color/black"
             android:layout_marginBottom="8dp" />
 
         <!-- Completed Checkbox -->
@@ -73,7 +83,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Completed"
+                android:text="@string/completed"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="8dp" />

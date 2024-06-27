@@ -98,20 +98,24 @@ class AddTaskFragment : ThemeFragment(), OnMapReadyCallback {
 
             taskTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
             taskDescriptionTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
             dueDateTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
             priorityTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
             taskLocation.setTextColor(myAppTheme.mainTextColor(requireContext()))
 
-            taskTitle.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            taskTitle.setTextColor(myAppTheme.mainEditTextColor(requireContext()))
             taskTitle.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
 
-            taskDescription.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            taskDescription.setTextColor(myAppTheme.mainEditTextColor(requireContext()))
             taskDescription.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
 
-            dueDate.setTextColor(myAppTheme.mainTextColor(requireContext()))
-            dueDate.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
 
-            taskLocation.setTextColor(myAppTheme.mainTextColor(requireContext()))
+            dueDate.setTextColor(myAppTheme.mainEditTextColor(requireContext()))
+
+            locationTxt.setTextColor(myAppTheme.mainTextColor(requireContext()))
+
+            taskLocation.setTextColor(myAppTheme.mainEditTextColor(requireContext()))
             taskLocation.setHintTextColor(myAppTheme.changeTextHintColor(requireContext()))
         }
 

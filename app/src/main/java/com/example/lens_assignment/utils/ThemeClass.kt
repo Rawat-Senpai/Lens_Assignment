@@ -24,6 +24,10 @@ class LightTheme: MyAppTheme{
         return ContextCompat.getColor(context, R.color.lightHintColor)
     }
 
+    override fun mainEditTextColor(context: Context): Int {
+        return ContextCompat.getColor(context, R.color.lightMainTextColor)
+    }
+
     override fun id(): Int {
         return  0
     }
@@ -52,6 +56,10 @@ class DarkTheme: MyAppTheme{
 
     override fun changeTextHintColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.darkHintColor)
+    }
+
+    override fun mainEditTextColor(context: Context): Int {
+        return ContextCompat.getColor(context, R.color.lightMainTextColor)
     }
 
 

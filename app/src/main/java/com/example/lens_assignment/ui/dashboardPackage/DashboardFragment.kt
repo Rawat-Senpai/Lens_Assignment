@@ -158,10 +158,10 @@ class DashboardFragment : ThemeFragment() {
     }
 
     private fun onTaskLongHold(task: Task) {
-        val bundle = Bundle()
-        bundle.putSerializable("task", Gson().toJson(task))
-        findNavController().navigate(R.id.action_homeFragment_to_addTaskFragment, bundle)
-        Log.d("task response", task.toString())
+//        val bundle = Bundle()
+//        bundle.putSerializable("task", Gson().toJson(task))
+//        findNavController().navigate(R.id.action_homeFragment_to_addTaskFragment, bundle)
+//        Log.d("task response", task.toString())
     }
 
 

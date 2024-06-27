@@ -18,5 +18,7 @@ interface MyAppTheme : AppTheme {
 
     fun changeTextHintColor(context: Context):Int
 
+    fun mainEditTextColor(context:Context):Int
+
 
 }

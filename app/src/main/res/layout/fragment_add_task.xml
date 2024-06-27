@@ -6,11 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.homeFragment.AddTaskFragment"
-    android:padding="10dp">
+   >
 
 
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -22,14 +23,14 @@
             android:id="@+id/taskTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Task Title"
+            android:text="@string/task_title"
             style="@style/LabelStyle" />
 
         <EditText
             android:id="@+id/taskTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter task title"
+            android:hint="@string/enter_task_title"
             android:layout_marginBottom="16dp"
             android:inputType="text"
             android:background="@drawable/edit_text_background" />
@@ -41,13 +42,13 @@
             style="@style/LabelStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Task Description" />
+            android:text="@string/task_description" />
 
         <EditText
             android:id="@+id/taskDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter task description"
+            android:hint="@string/enter_task_description"
             android:layout_marginBottom="16dp"
             android:scrollbars="vertical"
             android:minLines="3"
@@ -61,14 +62,14 @@
             android:id="@+id/dueDateTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Due Date"
+            android:text="@string/due_date"
             style="@style/LabelStyle" />
 
         <TextView
             android:id="@+id/dueDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter due date"
+            android:hint="@string/enter_due_date"
             android:layout_marginBottom="16dp"
             android:inputType="date"
             android:background="@drawable/edit_text_background" />
@@ -78,7 +79,7 @@
             android:id="@+id/priorityTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Priority Level"
+            android:text="@string/priority_level"
             style="@style/LabelStyle" />
 
         <Spinner
@@ -93,14 +94,14 @@
             android:id="@+id/locationTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Task Location"
+            android:text="@string/task_location"
             style="@style/LabelStyle" />
 
         <TextView
             android:id="@+id/taskLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter task location"
+            android:hint="@string/enter_task_location"
             android:layout_marginBottom="16dp"
             android:background="@drawable/edit_text_background" />
 
@@ -146,9 +147,11 @@
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit"
+            android:text="@string/submit"
             android:gravity="center"
             android:textSize="18sp"
+            android:backgroundTint="@color/medium_priority"
+            android:paddingVertical="10dp"
             android:letterSpacing="0.01"
             android:textColor="#FFFFFF"
             android:background="@drawable/button_background"
