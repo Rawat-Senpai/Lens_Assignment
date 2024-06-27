@@ -105,9 +105,9 @@ class MainActivity :  ThemeActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
     private fun authenticateUser(){
         val biometricPrompt = BiometricPrompt.Builder(this)
-            .setTitle("Title of Prompt")
-            .setSubtitle("Subtitle")
-            .setDescription("Uses FP")
+            .setTitle("Lens Assignment ")
+            .setSubtitle("Submitted by Shobhit ")
+            .setDescription("Uses Finger Print ")
             .setNegativeButton("Cancel", this.mainExecutor, DialogInterface.OnClickListener { dialog, which ->
                 notifyUser("Authentication Cancelled")
             }).build()
